@@ -1,0 +1,58 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Download Web Pages With Winsock Control</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to Download Web Pages With Winsock 
+Control</font></b></u></p>
+<p><i><span style="color: black">The Professional and Enterprise Editions of 
+Visual Basic are shipped with the Winsock control.&nbsp; This control allows you to 
+use the low level Windows Sockets to connect to remote servers and execute 
+commands or download Web pages.&nbsp; This tip shows how to connect to a server and 
+download a Web page.</span></i> </p>
+<p><i><span style="color: black">Code</span></i> </p>
+<p><i><span style="color: black">You must have a Winsock control loaded into the 
+project.&nbsp; This code assumes the control is called Winsock1.&nbsp; There also must be 
+a text box on the form which is called txtWebPage.</span></i> </p>
+<p><i><span style="color: black">First, connect to the remote computer using the 
+following code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Winsock1.RemoteHost = &quot;microsoft.com&quot;<br>
+Winsock1.RemotePort = 80<br>
+Winsock1.Connect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">In the Winsock1.Connect event, place the 
+following code to download the web page. </span></i></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+strCommand as String<br>
+Dim strWebPage as String<br>
+strWebPage = &quot;http://www.microsoft.com/index.shtml&quot;<br>
+strCommand = &quot;GET &quot; + strWebPage + &quot; HTTP/1.0&quot; + vbCrLf&nbsp;<br>
+strCommand = strCommand + &quot;Accept: */*&quot; + vbCrLf&nbsp;<br>
+strCommand = strCommand + &quot;Accept: text/html&quot; + vbCrLf&nbsp;<br>
+strCommand = strCommand + vbCrLf&nbsp;<br>
+Winsock1.SendData strCommand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">The Winsock control will attempt to download 
+the page.&nbsp; When is receives some data from the server, it will trigger the 
+DataArrival event.</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+webData As String <br>
+Winsock1.GetData webData, vbString<br>
+TxtWebPage.Text = TxtWebPage.Text + webData</span> </p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

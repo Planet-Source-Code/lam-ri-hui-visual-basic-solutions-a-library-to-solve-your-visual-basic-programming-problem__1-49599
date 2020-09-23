@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Delay a Program Without Using API</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Delay a Program Without Using API</font></u></b></p>
+<p><i><span style="color: black">Here is a way to delay an event or even stop 
+everything for any amount of time. &nbsp; To delay an event and let windows handle 
+other stuff use this code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Sub Delay(HowLong as date)<br>
+TempTime=DateAdd(&quot;s&quot;, HowLong, Now)<br>
+While TempTime &gt; Now<br>
+DoEvents 'Allows windows to handle other stuff<br>
+Wend<br>
+End Sub</span> </p>
+<p><i><span style="color: black">Or if you don't want windows to handle other 
+background stuff use this code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Sub Delay(HowLong as date)<br>
+Dim TempTime as Date<br>
+TempTime=DateAdd(&quot;s&quot;, HowLong, Now)<br>
+While TempTime &gt; Now<br>
+Wend<br>
+End Sub</span> </p>
+<p><i><span style="color: black">So, to make the program wait for 5 seconds use 
+the following code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Delay 
+5<br>
+'other code here that will not be done <br>
+'until after the delay</span> </p>
+<p class="MsoNormal">&nbsp;</p>
+<p>&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

@@ -1,0 +1,87 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Retrieve the Red, Green and Blue Value from a RGB Color</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Retrieve the Red, Green and Blue 
+Value from a RGB Color</font></u></b></p>
+<p class="MsoNormal"><em><span style="color: black">I had the problem to split 
+an RGB color to its red, green and blue values. So, I used my Assembler 
+knowledge to do it.! Here's the sample-code (for a command button):</span></em>
+</p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Private 
+Sub Command1_Click()<br>
+<br>
+x&amp; = RGB(212, 15, 21)<br>
+<br>
+'lowbyte = red value<br>
+'second byte = green value<br>
+'third byte = blue value<br>
+'highbyte = always zero<br>
+<br>
+Print &quot;RGB color:&quot;; x&amp;<br>
+<br>
+'first = low byte<br>
+Print &quot;red:&quot;; vbTab; x&amp; And &amp;HFF&amp;<br>
+<br>
+'seconde byte, to make it an eight bit value,<br>
+'we have to divide it by 256 = &amp;H100&amp;<br>
+Print &quot;green:&quot;; vbTab; (x&amp; And &amp;HFF00&amp;) \ &amp;H100&amp;<br>
+<br>
+'third byte, division by 65536 = &amp;H10000 makes<br>
+'it eight bit<br>
+Print &quot;blue:&quot;; vbTab; (x&amp; And &amp;HFF0000) \ &amp;H10000<br>
+<br>
+'the highbyte is always 0, so we don't have to<br>
+'read it!<br>
+'<br>
+'What does the AND-OPERATOR do?<br>
+'<br>
+'To get only the lowbyte, for example, you have<br>
+'to do an AND-OPERATION with &amp;HFF&amp; = 255.<br>
+'&amp;HFF&amp; = 0000000011111111 in bits (here I only<br>
+'show it as 16 bit value).<br>
+'<br>
+'0 and 0 = 0<br>
+'0 and 1 = 0<br>
+'1 and 0 = 0<br>
+'1 and 1 = 1<br>
+'<br>
+'So, making an AND-OPERATION with &amp;HFF&amp; doesn't<br>
+'change the lowbyte, but sets all other bytes<br>
+'(bits) to zero!!!<br>
+<br>
+'Using &amp;HFF00&amp; sets all bytes (bits) to zero<br>
+'except the second byte! To convert it to an<br>
+'eight bit value, simply divide it by 256 = &amp;H100&amp;.<br>
+'<br>
+'32-bit value: highbyte, third byte, second byte,<br>
+'lowbyte<br>
+'Other progtammers are using following names:<br>
+'H.O. Byte = high order byte<br>
+'Byte #2 = third byte<br>
+'Byte #1 = second byte<br>
+'L.O. Byte = low order byte<br>
+'<br>
+'e.g.:00010203, 00 = highbyte, 03 = lowbyte<br>
+<br>
+End Sub</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

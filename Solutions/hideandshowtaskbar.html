@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Hide and Show Taskbar</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to Hide and Show Taskbar</font></b></u></p>
+<p class="MsoNormal"><em><span style="color: black">This tip demonstrates how to 
+hide and show the Windows taskbar.</span></em> </p>
+<p><strong><i><span style="color: black">Declarations</span></i></strong> </p>
+<p><em><span style="color: black">You just copy this code into the declarations 
+section of your project.</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function SetWindowPos Lib &quot;user32&quot; (ByVal hwnd _<br>
+As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, _<br>
+ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal _<br>
+wFlags As Long) As Long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function FindWindow Lib &quot;user32&quot; Alias _<br>
+&quot;FindWindowA&quot; (ByVal lpClassName As String, ByVal _<br>
+lpWindowName As String) As Long<br>
+<br>
+Const SWP_HIDEWINDOW = &amp;H80<br>
+Const SWP_SHOWWINDOW = &amp;H40&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><em><span style="color: black">Code to Hide the Taskbar</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+Thwnd as Long<br>
+Thwnd = FindWindow(&quot;Shell_traywnd&quot;, &quot;&quot;)<br>
+Call SetWindowPos(Thwnd, 0, 0, 0, 0, 0, SWP_HIDEWINDOW)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><em><span style="color: black">Code to Show the Taskbar</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+Thwnd as Long<br>
+Thwnd = FindWindow(&quot;Shell_traywnd&quot;, &quot;&quot;)<br>
+Call SetWindowPos(Thwnd, 0, 0, 0, 0, 0, SWP_SHOWWINDOW</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

@@ -1,0 +1,104 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Create the Entire Directory Structures Quick</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5" face="Arial">How to Create the Entire 
+Directory Structures Quick</font></u></b></p>
+<p class="MsoNormal"><em><span style="color:black">If you ever need to quickly 
+create an entire directory structure for your application, the following 
+examples are a quick and easy way.</span></em> </p>
+<p><em><span style="color:black">There are two methods to create a directory 
+structure. You can use a File System Object, or you can use the CreateDirectory 
+API. We'll explain them both.</span></em> </p>
+<p><strong><i><span style="color:black">The File System Object example:</span></i></strong>
+</p>
+<p><em><span style="color:black">Just paste this code into a new project, and it 
+will create the directory 'c:\Testing\Hello\How\Are\You\'</span></em> </p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Public Sub rMkDir(ByVal mdir As String)<br>
+Dim FSO As Object<br>
+Set FSO = CreateObject(&quot;Scripting.FileSystemObject&quot;)<br>
+If FSO.GetParentFolderName(mdir) &lt;&gt; &quot;&quot; Then rMkDir FSO.GetParentFolderName(mdir)<br>
+On Local Error Resume Next<br>
+MkDir mdir<br>
+End Sub<br>
+Private Sub Form_Load()<br>
+rMkDir &quot;c:\Testing\Hello\How\Are\You\&quot;<br>
+End Sub</span> </p>
+<p><em><span style="color:black">Tip submitted by Eric Donoho</span></em> </p>
+<p><strong><i><span style="color:black">The CreateDirectory Example:</span></i></strong>
+</p>
+<p><em><span style="color:black">It uses the CreateDirectory API and the Dir() 
+function to quickly create all the directories in the path.</span></em> </p>
+<p><strong><i><span style="color:black">Declarations</span></i></strong> </p>
+<p><em><span style="color:black">Copy the following code into the declarations 
+section of the project.</span></em> </p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Private Type SECURITY_ATTRIBUTES<br>
+<br>
+nLength As Long<br>
+&nbsp;&nbsp;&nbsp; lpSecurityDescriptor As Long<br>
+&nbsp;&nbsp;&nbsp; bInheritHandle As Long<br>
+End Type<br>
+<br>
+Private Declare Function CreateDirectory Lib &quot;kernel32&quot; _<br>
+Alias &quot;CreateDirectoryA&quot; (ByVal lpPathName As String, _<br>
+lpSecurityAttributes As SECURITY_ATTRIBUTES) As Long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><strong><i><span style="color:black">Code</span></i></strong> </p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Public Sub CreateNewDirectory(NewDirectory As String)<br>
+Dim sDirTest As String<br>
+Dim SecAttrib As SECURITY_ATTRIBUTES<br>
+Dim bSuccess As Boolean<br>
+Dim sPath As String<br>
+Dim iCounter As Integer<br>
+Dim sTempDir As String<br>
+iFlag = 0<br>
+sPath = NewDirectory<br>
+<br>
+If Right(sPath, Len(sPath)) &lt;&gt; &quot;\&quot; Then<br>
+&nbsp;&nbsp;&nbsp; sPath = sPath &amp; &quot;\&quot;<br>
+End If<br>
+<br>
+iCounter = 1<br>
+<br>
+Do Until InStr(iCounter, sPath, &quot;\&quot;) = 0<br>
+&nbsp;&nbsp;&nbsp; iCounter = InStr(iCounter, sPath, &quot;\&quot;)<br>
+&nbsp;&nbsp;&nbsp; sTempDir = Left(sPath, iCounter)<br>
+&nbsp;&nbsp;&nbsp; sDirTest = Dir(sTempDir)<br>
+&nbsp;&nbsp;&nbsp; iCounter = iCounter + 1<br>
+&nbsp;&nbsp;&nbsp; 'create directory<br>
+&nbsp;&nbsp;&nbsp; SecAttrib.lpSecurityDescriptor = &amp;O0<br>
+&nbsp;&nbsp;&nbsp; SecAttrib.bInheritHandle = False<br>
+&nbsp;&nbsp;&nbsp; SecAttrib.nLength = Len(SecAttrib)<br>
+&nbsp;&nbsp;&nbsp; bSuccess = CreateDirectory(sTempDir, SecAttrib)<br>
+Loop<br>
+End Sub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><strong><i><span style="color:black">Use</span></i></strong> </p>
+<p><em><span style="color:black">You can use the code to create whole directory 
+structures easily and quickly.&nbsp; Fow example, the following code will create the 
+directory c:\test\directory\vb\tips\</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Call 
+CreateNewDirectory(&quot;c:\test\director</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

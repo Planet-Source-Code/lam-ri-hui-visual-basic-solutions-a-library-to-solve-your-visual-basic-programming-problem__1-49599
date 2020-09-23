@@ -1,0 +1,87 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Search a List Box by Typing Text Into a Control</title>
+<style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to </font><span style="font-family: Arial">
+<font size="5">Search a List Box by 
+Typing Text Into a Control</font></span></u></b></p>
+<p><i><span style="color: black">The second most popular questions that I 
+received during the past week is how to search a list box by typing text into a 
+control such as a textbox or combobox. This is very simple to do and uses the 
+SendMessage API. This works with VB 4, 5 and 6</span></i> </p>
+<p><i><span style="color: black">Here is the example:</span></i> </p>
+<!--mstheme--></font><!--msthemelist--><table type="disc" style="margin-bottom: 0in" border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica">Start a new Standard-EXE project. <!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica">Add a command button, textbox and a listbox control to 
+  form 1 <!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica">Add the following code to form1: <!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="arial, Arial, Helvetica">
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Option 
+Explicit<br>
+<br>
+Private Declare Function SendMessage Lib _<br>
+&quot;User32&quot; Alias &quot;SendMessageA&quot; (ByVal hWnd _<br>
+As Long, ByVal wMsg As Integer, ByVal _<br>
+wParam As Integer, lParam As Any) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Const 
+LB_FINDSTRING = &amp;H18F</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub Command1_Click()<br>
+End<br>
+End Sub</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub Form_Load()<br>
+With List1<br>
+&nbsp; .Clear<br>
+&nbsp; .AddItem &quot;CPU&quot;<br>
+&nbsp; .AddItem &quot;RAM&quot;<br>
+&nbsp; .AddItem &quot;ROM&quot;<br>
+&nbsp; .AddItem &quot;Cache&quot;<br>
+&nbsp; .AddItem &quot;Motherboard&quot;<br>
+&nbsp; .AddItem &quot;Hard Disk&quot;<br>
+&nbsp; .AddItem &quot;Floppy Disk&quot;<br>
+End With<br>
+End Sub</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub Text1_Change()<br>
+List1.ListIndex = SendMessage(List1.hWnd, _<br>
+LB_FINDSTRING, -1, ByVal Text1.Text)<br>
+Text1.Text = List1.Text<br>
+End Sub</span> </p>
+<!--mstheme--></font><!--msthemelist--><table type="disc" style="margin-bottom: 0in" border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica">Run the project (F5) and type some text into the text 
+  box, and if it matches the text in the listbox then the text will be displayed 
+  in the text box. You can do this will any control such as a combo box that 
+  allows you to enter text into it and has a text property. <!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="arial, Arial, Helvetica">
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

@@ -1,0 +1,122 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Change The Screen Resolution</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to Change The Screen Resolution</font></b></u></p>
+<p><i><span style="color: black">A big problem for many vb-programmers is how to 
+change the screen resolution, also because in the Api-viewer the variable for 
+EnumDisplaySettings and ChangeDisplaySettings is missing!</span></i> </p>
+<p>1. Code for the basic-module</p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Declare 
+Function EnumDisplaySettings Lib &quot;user32&quot; _<br>
+Alias &quot;EnumDisplaySettingsA&quot; _<br>
+(ByVal lpszDeviceName As Long, _<br>
+ByVal iModeNum As Long, _<br>
+lpDevMode As Any) As Boolean&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function ChangeDisplaySettings Lib &quot;user32&quot; _<br>
+Alias &quot;ChangeDisplaySettingsA&quot; _<br>
+(lpDevMode As Any, ByVal dwFlags As Long) As Long<br>
+<br>
+Declare Function ExitWindowsEx Lib &quot;user32&quot; _<br>
+(ByVal uFlags As Long, ByVal dwReserved As Long) As Long&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Const EWX_LOGOFF = 0<br>
+Public Const EWX_SHUTDOWN = 1<br>
+Public Const EWX_REBOOT = 2<br>
+Public Const EWX_FORCE = 4<br>
+Public Const CCDEVICENAME = 32<br>
+Public Const CCFORMNAME = 32<br>
+Public Const DM_BITSPERPEL = &amp;H40000<br>
+Public Const DM_PELSWIDTH = &amp;H80000<br>
+Public Const DM_PELSHEIGHT = &amp;H100000<br>
+Public Const CDS_UPDATEREGISTRY = &amp;H1<br>
+Public Const CDS_TEST = &amp;H4<br>
+Public Const DISP_CHANGE_SUCCESSFUL = 0<br>
+Public Const DISP_CHANGE_RESTART = 1&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Type 
+DEVMODE<br>
+&nbsp;&nbsp;&nbsp; dmDeviceName As String * CCDEVICENAME<br>
+&nbsp;&nbsp;&nbsp; dmSpecVersion As Integer<br>
+&nbsp;&nbsp;&nbsp; dmDriverVersion As Integer<br>
+&nbsp;&nbsp;&nbsp; dmSize As Integer<br>
+&nbsp;&nbsp;&nbsp; dmDriverExtra As Integer<br>
+&nbsp;&nbsp;&nbsp; dmFields As Long<br>
+&nbsp;&nbsp;&nbsp; dmOrientation As Integer<br>
+&nbsp;&nbsp;&nbsp; dmPaperSize As Integer<br>
+&nbsp;&nbsp;&nbsp; dmPaperLength As Integer<br>
+&nbsp;&nbsp;&nbsp; dmPaperWidth As Integer<br>
+&nbsp;&nbsp;&nbsp; dmScale As Integer<br>
+&nbsp;&nbsp;&nbsp; dmCopies As Integer<br>
+&nbsp;&nbsp;&nbsp; dmDefaultSource As Integer<br>
+&nbsp;&nbsp;&nbsp; dmPrintQuality As Integer<br>
+&nbsp;&nbsp;&nbsp; dmColor As Integer<br>
+&nbsp;&nbsp;&nbsp; dmDuplex As Integer<br>
+&nbsp;&nbsp;&nbsp; dmYResolution As Integer<br>
+&nbsp;&nbsp;&nbsp; dmTTOption As Integer<br>
+&nbsp;&nbsp;&nbsp; dmCollate As Integer<br>
+&nbsp;&nbsp;&nbsp; dmFormName As String * CCFORMNAME<br>
+&nbsp;&nbsp;&nbsp; dmUnusedPadding As Integer<br>
+&nbsp;&nbsp;&nbsp; dmBitsPerPel As Integer<br>
+&nbsp;&nbsp;&nbsp; dmPelsWidth As Long<br>
+&nbsp;&nbsp;&nbsp; dmPelsHeight As Long<br>
+&nbsp;&nbsp;&nbsp; dmDisplayFlags As Long<br>
+&nbsp;&nbsp;&nbsp; dmDisplayFrequency As Long<br>
+End Type&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">Example</span></i> </p>
+<p><i><span style="color: black">Changes the resolution to 640x480 with the 
+current colordepth. </span></i></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+DevM As DEVMODE<br>
+'Get the info into DevM<br>
+erg&amp; = EnumDisplaySettings(0&amp;, 0&amp;, DevM)<br>
+'We don't change the colordepth, because a<br>
+'rebot will be necessary<br>
+<br>
+DevM.dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT 'Or DM_BITSPERPEL<br>
+DevM.dmPelsWidth = 640 'ScreenWidth<br>
+DevM.dmPelsHeight = 480 'ScreenHeight<br>
+'DevM.dmBitsPerPel = 32 (could be 8, 16, 32 or even 4)<br>
+<br>
+'Now change the display and check if possible&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">erg&amp; 
+= ChangeDisplaySettings(DevM, CDS_TEST)<br>
+<br>
+'Check if succesfull&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Select Case erg&amp;<br>
+Case DISP_CHANGE_RESTART<br>
+&nbsp;&nbsp;&nbsp; an = MsgBox(&quot;You've to reboot&quot;, vbYesNo + vbSystemModal, &quot;Info&quot;)<br>
+&nbsp;&nbsp;&nbsp; If an = vbYes Then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; erg&amp; = ExitWindowsEx(EWX_REBOOT, 0&amp;)<br>
+&nbsp;&nbsp;&nbsp; End If<br>
+Case DISP_CHANGE_SUCCESSFUL<br>
+&nbsp;&nbsp;&nbsp; erg&amp; = ChangeDisplaySettings(DevM, CDS_UPDATEREGISTRY)<br>
+&nbsp;&nbsp;&nbsp; MsgBox &quot;Everything's ok&quot;, vbOKOnly + vbSystemModal, &quot;It worked!&quot;<br>
+Case Else<br>
+&nbsp;&nbsp;&nbsp; MsgBox &quot;Mode not supported&quot;, vbOKOnly + vbSystemModal, &quot;Error&quot;<br>
+End Select&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">End 
+Sub </span></p>
+<p>&nbsp;</p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

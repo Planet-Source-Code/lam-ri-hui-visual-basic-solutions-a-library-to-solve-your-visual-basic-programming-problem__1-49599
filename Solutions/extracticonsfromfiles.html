@@ -1,0 +1,121 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Extract Icons From Files</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Extract Icons From Files</font></u></b></p>
+<p><i><span style="color: black">Using this simple sub, you can get icons easily 
+out of files, including DLLs, EXEs and ICOs. It uses the ExtractIconEX API to 
+extract the icon from the file, and create a handle to the icon. It then uses 
+the DrawIcon API to paint the icon on to the destination, and then destroys the 
+handles to the icons to free up resources.</span></i> </p>
+<p><i><span style="color: black">Declarations</span></i> </p>
+<p><i><span style="color: black">Copy the following code into the declarations 
+section of a module.</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Type PicBmp<br>
+&nbsp;&nbsp; Size As Long<br>
+&nbsp;&nbsp; tType As Long<br>
+&nbsp;&nbsp; hBmp As Long<br>
+&nbsp;&nbsp; hPal As Long<br>
+&nbsp;&nbsp; Reserved As Long<br>
+End Type</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Type GUID<br>
+&nbsp;&nbsp; Data1 As Long<br>
+&nbsp;&nbsp; Data2 As Integer<br>
+&nbsp;&nbsp; Data3 As Integer<br>
+&nbsp;&nbsp; Data4(7) As Byte<br>
+End Type</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Declare Function OleCreatePictureIndirect _<br>
+Lib &quot;olepro32.dll&quot; (PicDesc As PicBmp, RefIID As GUID, _<br>
+ByVal fPictureOwnsHandle As Long, IPic As IPicture) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Declare Function ExtractIconEx Lib &quot;shell32.dll&quot; _<br>
+Alias &quot;ExtractIconExA&quot; (ByVal lpszFile As String, ByVal _<br>
+nIconIndex As Long, phiconLarge As Long, phiconSmall As _<br>
+Long, ByVal nIcons As Long) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Declare Function DestroyIcon Lib &quot;user32&quot; (ByVal _<br>
+hicon As Long) As Long</span> </p>
+<p><i><span style="color: black">Function</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Function GetIconFromFile(FileName As String, _<br>
+IconIndex As Long, UseLargeIcon As Boolean) As Picture<br>
+<br>
+'Parameters:<br>
+'FileName - File (EXE or DLL) containing icons<br>
+'IconIndex - Index of icon to extract, starting with 0<br>
+'UseLargeIcon-True for a large icon, False for a small icon<br>
+'Returns: Picture object, containing icon<br>
+<br>
+Dim hlargeicon As Long<br>
+Dim hsmallicon As Long<br>
+Dim selhandle As Long<br>
+<br>
+' IPicture requires a reference to &quot;Standard OLE Types.&quot;<br>
+Dim pic As PicBmp<br>
+Dim IPic As IPicture<br>
+Dim IID_IDispatch As GUID<br>
+<br>
+If ExtractIconEx(FileName, IconIndex, hlargeicon, _<br>
+hsmallicon, 1) &gt; 0 Then<br>
+<br>
+If UseLargeIcon Then<br>
+selhandle = hlargeicon<br>
+Else<br>
+selhandle = hsmallicon<br>
+End If<br>
+<br>
+' Fill in with IDispatch Interface ID.<br>
+With IID_IDispatch<br>
+.Data1 = &amp;H20400<br>
+.Data4(0) = &amp;HC0<br>
+.Data4(7) = &amp;H46<br>
+End With<br>
+' Fill Pic with necessary parts.<br>
+With pic<br>
+.Size = Len(pic) ' Length of structure.<br>
+.tType = vbPicTypeIcon ' Type of Picture (bitmap).<br>
+.hBmp = selhandle ' Handle to bitmap.<br>
+End With<br>
+<br>
+' Create Picture object.<br>
+Call OleCreatePictureIndirect(pic, IID_IDispatch, 1, IPic)<br>
+<br>
+' Return the new Picture object.<br>
+Set GetIconFromFile = IPic<br>
+<br>
+DestroyIcon hsmallicon<br>
+DestroyIcon hlargeicon<br>
+<br>
+End If<br>
+End Function</span> </p>
+<p><i><span style="color: black">Example</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Set 
+Picture1.Picture = GetIconFromFile(&quot;c:\windows\moricons.dll&quot;, _<br>
+0, True)</span> </p>
+<p><i><span style="color: black">This will paint the MS-DOS icon onto Picture1 
+in the normal sized icon(ie. 32x32). You can then use the PaintPicture function 
+to rearrange and resize it. </span></i></p>
+<p><i><span style="color: black">Note: You must select Standard OLE Types in the 
+Project|References box </span></i></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

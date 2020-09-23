@@ -1,0 +1,64 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Move the Mouse Pointer to the Control With Focus</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p class="MsoNormal" align="center"><b><u><font size="5">How to Move the Mouse 
+Pointer to the Control With Focus</font></u></b></p>
+<p class="MsoNormal"><em><span style="color: black">With some mouse utilities 
+you can set that the mousepointer automaticlly moves to the control which has 
+the focus, this tip shows how you can do the same in VB.</span></em><i><span style="color: black"><br>
+<em>Create a .exe project with a module and add the following code to it:</em></span></i>
+</p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function SetCursorPos Lib &quot;user32&quot; (ByVal x _<br>
+As Long, ByVal y As Long) As Long</span> </p>
+<p><em><span style="color: black">On form1 put a couple of controls 
+(textbox1,commandbutton1,combo1,list1 etc.) </span></em><i>
+<span style="color: black"><br>
+<em>First add the following code to form1</em></span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub focus()<br>
+If Me.BorderStyle = 0 Then<br>
+&nbsp;&nbsp; x&amp; = Me.ActiveControl.Left \ Screen.TwipsPerPixelX _<br>
+&nbsp;&nbsp; + ((Me.ActiveControl.Width / 2) / Screen.TwipsPerPixelX) _<br>
+&nbsp;&nbsp; + (Me.Left / Screen.TwipsPerPixelX)<br>
+&nbsp;&nbsp; y&amp; = Me.ActiveControl.Top \ Screen.TwipsPerPixelY _<br>
+&nbsp;&nbsp; + ((Me.ActiveControl.Height / 2) / Screen.TwipsPerPixelY) _<br>
+&nbsp;&nbsp; + (Me.Top / Screen.TwipsPerPixelY)<br>
+Else<br>
+&nbsp;&nbsp; x&amp; = Me.ActiveControl.Left \ Screen.TwipsPerPixelX _<br>
+&nbsp;&nbsp; + ((Me.ActiveControl.Width / 2 + 60) / _<br>
+&nbsp;&nbsp; Screen.TwipsPerPixelX) + (Me.Left / _<br>
+&nbsp;&nbsp; Screen.TwipsPerPixelX)<br>
+&nbsp;&nbsp; ' &quot;+ 60&quot; is for the border&quot;<br>
+&nbsp;&nbsp; y&amp; = Me.ActiveControl.Top \ Screen.TwipsPerPixelY _<br>
+&nbsp;&nbsp; + ((Me.ActiveControl.Height / 2 + 360) / _<br>
+&nbsp;&nbsp; Screen.TwipsPerPixelY) + (Me.Top / _<br>
+&nbsp;&nbsp; Screen.TwipsPerPixelY)<br>
+&nbsp;&nbsp; ' &quot;+ 360 &quot; is for the border and the tittle bar&quot;<br>
+End If<br>
+a&amp; = SetCursorPos(x&amp;, y&amp;)<br>
+End Sub</span> </p>
+<p class="MsoNormal"><em><span style="color: black">Then put &quot; Call focus &quot; in 
+the gotfocus event of every control.</span></em><i><span style="color: black"><br>
+<em>Execute the app. (F5) and Tab through the controls, you`ll see that the 
+mousepointer moves it`s position to the control with focus</em></span></i></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

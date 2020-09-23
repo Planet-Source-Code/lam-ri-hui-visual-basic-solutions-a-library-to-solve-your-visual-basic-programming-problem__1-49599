@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Record a CD to Wave File</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Record a CD to Wave File</font></u></b></p>
+<p class="MsoNormal"><em><span style="color: black">This function uses the 
+multimedia control interface (MCI) to control the CD drive.</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Sub RecordWave(TrackNum As Integer, Filename As String)<br>
+' Tracknum: track to record<br>
+' Filename: file to save wave as</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">On 
+Local Error Resume Next<br>
+Dim i As Long, RS As String, cb As Long, t#<br>
+RS = Space$(128)</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">i = 
+mciSendString(&quot;stop cdaudio&quot;, RS, 128, cb)<br>
+i = mciSendString(&quot;close cdaudio&quot;, RS, 128, cb)</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Kill 
+filename</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">RS = 
+Space$(128)<br>
+i = mciSendString(&quot;status cdaudio position track &quot; &amp; TrackNum, RS, 128, cb)<br>
+i = mciSendString(&quot;open cdaudio&quot;, RS, 128, cb)<br>
+i = mciSendString(&quot;set cdaudio time format milliseconds&quot;, RS, 128, cb)<br>
+i = mciSendString(&quot;play cdaudio&quot;, RS, 128, cb)<br>
+i = mciSendString(&quot;open new type waveaudio alias capture&quot;, RS, 128, cb)<br>
+i = mciSendString(&quot;record capture&quot;, RS, 128, cb)<br>
+<br>
+t# = Timer + 1: Do Until Timer &gt; t#: DoEvents: Loop<br>
+<br>
+i = mciSendString(&quot;save capture &quot; &amp; filename, RS, 128, cb)<br>
+i = mciSendString(&quot;stop cdaudio&quot;, RS, 128, cb)<br>
+i = mciSendString(&quot;close cdaudio&quot;, RS, 128, cb)<br>
+<br>
+End Sub</span> </p>
+<p><em><span style="color: black">The method is quite easy:</span></em> </p>
+<p class="MsoNormal"><em><span style="color: black">1) Stop everything in the CD 
+drive</span></em><i><span style="color: black"><br>
+<em>2) Start playing track</em><br>
+<em>3) Record a new wave with the information from the CD (note: it also records 
+MIDI and microphone sounds: in fact anything coming out of the speakers)</em><br>
+<em>4) Save the wave file</em><br>
+<em>5) Stop the CD again</em></span></i></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

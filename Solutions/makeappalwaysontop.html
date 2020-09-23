@@ -1,0 +1,60 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Make My Application Always On Top</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Make My Application Always On Top</font></u></b></p>
+<p><i><span style="color: black">To force a form to the front of the screen, use 
+the following command:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Form1.ZOrder </span></p>
+<p><i><span style="color: black">To make the application stay on top, put the 
+Zorder command in a Timer event repeatedly called, say every 1000 msecs. This 
+makes a &quot;softer&quot; on-top than other methods, and allows the user to make a short 
+peek below the form.</span></i> </p>
+<p><i><span style="color: black">There are two different &quot;Zorder&quot;'s of forms in 
+Windows, both implemented internally as linked lists. One is for &quot;normal&quot; 
+windows, the other for real &quot;topmost&quot; windows (like the Clock application which 
+is distributed with MS Windows). The Zorder command above simply moves your 
+window to the top of the &quot;normal&quot; window stack. To make your window truly 
+topmost, use the SetWindowPos API call like this:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">'Make 
+these declares: </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function SetWindowPos Lib &quot;user32&quot; _<br>
+(ByVal h%, ByVal hb%, ByVal x%, ByVal y%, _<br>
+ByVal cx%,ByVal cy%,ByVal f%) As Integer&nbsp;<br>
+Global Const SWP_NOMOVE = 2&nbsp;<br>
+Global Const SWP_NOSIZE = 1&nbsp;<br>
+Global Const FLAGS = SWP_NOMOVE Or SWP_NOSIZE&nbsp;<br>
+Global Const HWND_TOPMOST = -1&nbsp;<br>
+Global Const HWND_NOTOPMOST = -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">'To 
+set Form1 as a TopMost form, do the following: </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">res% 
+= SetWindowPos (Form1.hWnd, HWND_TOPMOST, _<br>
+0, 0, 0, 0, FLAGS)&nbsp;<br>
+'if res%=0, there is an error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black"><br>
+'To turn off topmost (make the form act normal again): <br>
+res% = SetWindowPos (Form1.hWnd, HWND_NOTOPMOST, _<br>
+0, 0, 0, 0, FLAGS)</span></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

@@ -1,0 +1,115 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Know Whether an Application Executed Using The SHELL Command Is 
+Finished</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to </font><span style="font-family: Arial">
+<font size="5">Know Whether</font></span></b><span style="color: green; font-family: Arial"><b><font size="5">
+</font>
+</b></span><span style="font-family: Arial; font-weight:700"><font size="5">an 
+Application Executed Using The SHELL Command Is Finished</font></span></u></p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+It is often necessary for a program to know when a shelled application has 
+finished. &nbsp;We have procedure that does not return control to the rest of the 
+program until the application that has been shelled is quit.&nbsp; To use this 
+procedure, simply call ExecCmd(strProgram).</span> </p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Declarations</span> </p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+This code must be placed in the declarations section of the project.</span> </p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Private Type STARTUPINFO<br>
+&nbsp;&nbsp;&nbsp; cb As Long<br>
+&nbsp;&nbsp;&nbsp; lpReserved As String<br>
+&nbsp;&nbsp;&nbsp; lpDesktop As String<br>
+&nbsp;&nbsp;&nbsp; lpTitle As String<br>
+&nbsp;&nbsp;&nbsp; dwX As Long<br>
+&nbsp;&nbsp;&nbsp; dwY As Long<br>
+&nbsp;&nbsp;&nbsp; dwXSize As Long<br>
+&nbsp;&nbsp;&nbsp; dwYSize As Long<br>
+&nbsp;&nbsp;&nbsp; dwXCountChars As Long<br>
+&nbsp;&nbsp;&nbsp; dwYCountChars As Long<br>
+&nbsp;&nbsp;&nbsp; dwFillAttribute As Long<br>
+&nbsp;&nbsp;&nbsp; dwFlags As Long<br>
+&nbsp;&nbsp;&nbsp; wShowWindow As Integer<br>
+&nbsp;&nbsp;&nbsp; cbReserved2 As Integer<br>
+&nbsp;&nbsp;&nbsp; lpReserved2 As Long<br>
+&nbsp;&nbsp;&nbsp; hStdInput As Long<br>
+&nbsp;&nbsp;&nbsp; hStdOutput As Long<br>
+&nbsp;&nbsp;&nbsp; hStdError As Long<br>
+End Type<br>
+<br>
+Private Type PROCESS_INFORMATION<br>
+&nbsp;&nbsp;&nbsp; hProcess As Long<br>
+&nbsp;&nbsp;&nbsp; hThread As Long<br>
+&nbsp;&nbsp;&nbsp; dwProcessID As Long<br>
+&nbsp;&nbsp;&nbsp; dwThreadID As Long<br>
+End Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Private Declare Function WaitForSingleObject Lib _<br>
+&quot;kernel32&quot; (ByVal hHandle As Long, ByVal dwMilliseconds _<br>
+As Long) As Long<br>
+<br>
+Declare Function CreateProcessA Lib &quot;kernel32&quot; _<br>
+(ByVal lpApplicationName As Long, ByVal lpCommandLine As _<br>
+String, ByVal lpProcessAttributes As Long, ByVal _<br>
+lpThreadAttributes As Long, ByVal bInheritHandles As Long, _<br>
+ByVal dwCreationFlags As Long, ByVal lpEnvironment As Long, _<br>
+ByVal lpCurrentDirectory As Long, lpStartupInfo As _<br>
+STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) _<br>
+As Long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Declare Function CloseHandle Lib &quot;kernel32&quot; (ByVal hObject _<br>
+As Long) As Long<br>
+<br>
+Private Const NORMAL_PRIORITY_CLASS = &amp;H20&amp;<br>
+Private Const INFINITE = -1&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color:black">Prodedure</span></i> </p>
+<p><i><span style="color:black">This is the code that can be called to execute 
+an external program.&nbsp; Simply copy this code into the code of your project.&nbsp; To 
+run an external program, call ExecCmd(program) from anywhere in your code.
+</span></i></p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Public Sub ExecCmd(cmdline$)<br>
+Dim proc As PROCESS_INFORMATION<br>
+Dim start As STARTUPINFO<br>
+<br>
+' Initialize the STARTUPINFO structure:<br>
+start.cb = Len(start)<br>
+<br>
+' Start the shelled application:<br>
+ret&amp; = CreateProcessA(0&amp;, cmdline$, 0&amp;, 0&amp;, 1&amp;, _<br>
+NORMAL_PRIORITY_CLASS, 0&amp;, 0&amp;, start, proc)<br>
+<br>
+' Wait for the shelled application to finish:<br>
+ret&amp; = WaitForSingleObject(proc.hProcess, INFINITE)<br>
+ret&amp; = CloseHandle(proc.hProcess)<br>
+End Sub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

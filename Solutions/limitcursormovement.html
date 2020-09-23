@@ -1,0 +1,94 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Limit Cursor Movement Inside a Form</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to </font>
+<font size="5" face="Arial">Limit Cursor Movement Inside a Form</font></b></u></p>
+<p class="MsoNormal"><em><span style="color:black">You might want to limit the 
+cursor movement area if you have drag-and-drop</span></em><i><span style="color:black"><br>
+<em>functionality within a form and you only want the user to drag an item</em><br>
+<em>inside a form.</em><br>
+<br>
+<em>The ClipCursor function confines the cursor to a rectangular area on the</em><br>
+<em>screen. If a subsequent cursor position (set by the SetCursorPos function</em><br>
+<em>or the mouse) lies outside the rectangle, Windows automatically adjusts the</em><br>
+<em>position to keep the cursor inside the rectangular area.</em><br>
+<br>
+<em>The form borders serve as the rectangular area for the ClipCursor function.</em><br>
+<em>To get the size of the form, use the GetClientRect function. This function</em><br>
+<em>retrieves the coordinates of a window's client area. The coordinates are</em><br>
+<em>relative to the upper-left corner of a window's client area; the</em><br>
+<em>coordinates of the upper-left corner are (0,0). This means you will have to</em><br>
+<em>convert the client coordinates to screen coordinates.</em><br>
+<br>
+<em>The ClientToScreen function converts the client coordinates of a specified</em><br>
+<em>point to screen coordinates. The last function used is the OffsetRect</em><br>
+<em>function. The OffsetRect function moves the specified rectangle by the</em><br>
+<em>specified offsets.</em><br>
+<br>
+<em>NOTE: If you unload the form after executing the ClipCursor function, the</em><br>
+<em>cursor will still be limited to the last coordinates of the now-unloaded</em><br>
+<em>form. To prevent this behavior, calling the ClipCursor function with a null</em><br>
+<em>argument in the Form_Unload event is recommended.</em></span></i> </p>
+<p class="MsoNormal">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+color:black">Private Type RECT<br>
+left As Integer<br>
+top As Integer<br>
+right As Integer<br>
+bottom As Integer<br>
+End Type<br>
+Private Type POINT<br>
+x As Long<br>
+y As Long<br>
+End Type<br>
+Private Declare Sub ClipCursor Lib &quot;user32&quot; (lpRect As Any)<br>
+Private Declare Sub GetClientRect Lib &quot;user32&quot; (ByVal hWnd As Long, lpRect As 
+RECT)<br>
+Private Declare Sub ClientToScreen Lib &quot;user32&quot; (ByVal hWnd As Long, lpPoint As 
+POINT)<br>
+Private Declare Sub OffsetRect Lib &quot;user32&quot; (lpRect As RECT, ByVal x As Long, 
+ByVal y As Long)<br>
+Private Sub Form_Load()<br>
+Command1.Caption = &quot;Limit Cursor Movement&quot;<br>
+Command2.Caption = &quot;Release Limit&quot;<br>
+End Sub<br>
+Private Sub Command1_Click()<br>
+'Limits the Cursor movement to within the form.<br>
+Dim client As RECT<br>
+Dim upperleft As POINT<br>
+<br>
+GetClientRect Me.hWnd, client<br>
+upperleft.x = client.left<br>
+upperleft.y = client.top<br>
+ClientToScreen Me.hWnd, upperleft<br>
+OffsetRect client, upperleft.x, upperleft.y<br>
+ClipCursor client<br>
+End Sub<br>
+Private Sub Command2_Click()<br>
+'Releases the cursor limits<br>
+ClipCursor ByVal 0&amp;<br>
+End Sub<br>
+Private Sub Form_Unload(Cancel As Integer)<br>
+'Releases the cursor limits<br>
+ClipCursor ByVal 0&amp;<br>
+End Sub</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

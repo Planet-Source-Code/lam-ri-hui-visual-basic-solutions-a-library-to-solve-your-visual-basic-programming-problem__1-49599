@@ -1,0 +1,45 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Close an Application</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to Close an Application</font></b></u></p>
+<p class="MsoNormal"><em><span style="color: black">You can always use the 
+FindWindow-function and the PostMessage-function to find the wanted application, 
+and then send it a message that it has to close itself. One disadvantage: you'll 
+need the exact caption of this application.</span></em> </p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Private 
+Declare Function FindWindow Lib &quot;user32&quot; Alias &quot;FindWindowA&quot; (ByVal lpClassName 
+As String, ByVal lpWindowName As String) As Long<br>
+Private Declare Function PostMessage Lib &quot;user32&quot; Alias &quot;PostMessageA&quot; (ByVal 
+hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long<br>
+Const WM_CLOSE = &amp;H10<br>
+Private Sub Form_Load()<br>
+Dim winHwnd As Long<br>
+Dim RetVal As Long<br>
+winHwnd = FindWindow(vbNullString, &quot;Calculator&quot;)<br>
+If winHwnd &lt;&gt; 0 Then<br>
+PostMessage winHwnd, WM_CLOSE, 0&amp;, 0&amp;<br>
+Else<br>
+MsgBox &quot;The Calculator is not open.&quot;<br>
+End If<br>
+End Sub</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

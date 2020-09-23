@@ -1,0 +1,83 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Use WithEvents to Add Features to a Textbox</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Use WithEvents to Add Features to 
+a Textbox</font></u></b></p>
+<p><i><span style="color: black">Have you ever felt that certain standard 
+Windows controls were lacking features? Would you like to add features to a 
+textbox which you wouldn't have to code every time you created a new textbox? 
+Typically, you would create a generic subroutine and call it from the event of 
+every control.&nbsp; With VB5 and higher, a command named &quot;WihEvents&quot; provides a 
+simpler solution.&nbsp; Let's say you wanted a textbox that would only accept 
+uppercase letters as input. If lowercase letters were entered they would be 
+automatically converted to uppercase. Numbers and all symbols would be rejected. 
+&nbsp; And whenever the mouse pointer passed over it, you wanted to show the mouse 
+position in the textbox. Finally, let's say you didn't want the fourth textbox 
+to accept the letter 'Z'.</span></i> </p>
+<p><i><span style="color: black">Create a standard EXE project, add four textbox 
+controls onto the default form, and add a class module. Enter the following code 
+to Form1:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+'General Declarations<br>
+Private clsTextBox1 As Class1<br>
+Private clsTextBox2 As Class1<br>
+Private clsTextBox3 As Class1<br>
+Private clsTextBox4 As Class1<br>
+<br>
+Private Sub Form_Load()<br>
+Set clsTextBox1 = New Class1<br>
+Set clsTextBox1.TextBoxCtl = Text1<br>
+Set clsTextBox2 = New Class1<br>
+Set clsTextBox2.TextBoxCtl = Text2<br>
+Set clsTextBox3 = New Class1<br>
+Set clsTextBox3.TextBoxCtl = Text3<br>
+Set clsTextBox4 = New Class1<br>
+Set clsTextBox4.TextBoxCtl = Text4<br>
+End Sub</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub Text4_KeyPress(KeyAscii As Integer)<br>
+'-- This code executes before the class keypress<br>
+If KeyAscii = Asc(&quot;a&quot;) Then Beep<br>
+End Sub</span> </p>
+<p><i><span style="color: black">In Class1, enter the following code:</span></i>
+</p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private WithEvents txt As TextBox<br>
+Public Property Set TextBoxCtl(OutsideTextBox As TextBox)<br>
+Set txt = OutsideTextBox<br>
+End Property</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub txt_KeyPress(KeyAscii As Integer)<br>
+'-- Convert to Uppercase<br>
+KeyAscii = Asc(UCase$(Chr$(KeyAscii)))<br>
+End Sub</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub txt_MouseMove(Button As Integer, Shift As Integer, _<br>
+X As Single, Y As Single)<br>
+txt.ToolTipText = &quot;X:&quot; &amp; X &amp; &quot; Y:&quot; &amp; Y<br>
+End Sub</span> </p>
+<p><i><span style="color: black">To add new functionality to all four textboxes, 
+simply enter code into the class. &nbsp; Remember, the keypress event for textbox4 
+executes first when a key is pressed. Then, the Classes keypress event fires 
+next.</span></i> </p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

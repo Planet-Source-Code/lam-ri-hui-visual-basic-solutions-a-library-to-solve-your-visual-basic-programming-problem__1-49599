@@ -1,0 +1,62 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Count the Number of Lines in a textbox</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Count the Number of Lines in a 
+textbox</font></u></b></p>
+<p><i><span style="color: black">This method is straightforward: it uses 
+SendMessage to retrieve the number of lines in a textbox.&nbsp; A line to this method 
+is defined as a new line after a word-wrap; it is independent of the number of 
+hard returns in the text.</span></i> </p>
+<p><i><span style="color: black">Declarations</span></i> </p>
+<p><i><span style="color: black">Place the following API declare code into the 
+general declarations area of a bas module.&nbsp;&nbsp; If using VB4-32 or VB5, and this is 
+a one-form project, the declares below could be placed into the general 
+declaration section of the form instead, with all Public references changed to 
+Private.</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Option Explicit<br>
+<br>
+Public Declare Function SendMessageLong Lib _<br>
+&nbsp;&nbsp;&nbsp; &quot;user32&quot; Alias &quot;SendMessageA&quot; _<br>
+&nbsp;&nbsp;&nbsp; (ByVal hwnd As Long, _&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ByVal wMsg As Long, _&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ByVal wParam As Long, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ByVal lParam As Long) As Long<br>
+<br>
+Public Const EM_GETLINECOUNT = &amp;HBA&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">Form Code</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Sub 
+Text1_Change()<br>
+&nbsp;&nbsp;&nbsp; Dim lineCount as Long<br>
+&nbsp;&nbsp;&nbsp; On Local Error Resume Next<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp; 'get/show the number of lines in the edit control<br>
+&nbsp;&nbsp;&nbsp; lineCount = SendMessageLong(Text1.hwnd, EM_GETLINECOUNT, 0&amp;, 0&amp;)<br>
+&nbsp;&nbsp;&nbsp; Label1 = Format$(lineCount, &quot;##,###&quot;)<br>
+End Sub&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">Comments</span></i> </p>
+<p><i><span style="color: black">The textbox passed to the SendMessage API must 
+have its multiline property set to true at design time. The EM_GETLINECOUNT 
+message does not pass additional parameters to the API in the wParam or lParam 
+variables. These must be 0. </span></i></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

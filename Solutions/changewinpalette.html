@@ -1,0 +1,39 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Change The Windows Palette</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Change The Windows Palette</font></u></b></p>
+<p class="MsoNormal"><em><span style="color: black">All you need is a PictureBox 
+and a picture with many different colors. First you'll have to select a palette 
+(with the SelectPalette-function) and then you'll have to set that palette as 
+the global Windows-palette.</span></em><i><span style="color: black"><br>
+<em>This example is best tested in 8-bit modus (256-colors).</em></span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Declare Function RealizePalette Lib &quot;gdi32&quot; (ByVal hdc As Long) As Long<br>
+Private Declare Function SelectPalette Lib &quot;gdi32&quot; (ByVal hdc As Long, ByVal 
+hPalette As Long, ByVal bForceBackground As Long) As Long<br>
+Private Sub Form_Activate()<br>
+SelectPalette Picture1.hdc, Picture1.Picture.hPal, False<br>
+RealizePalette Picture1.hdc<br>
+End Sub</span> </p>
+<p class="MsoNormal"><em><span style="color: black">To create your own palette, 
+use the CreatePalette-function</span></em></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

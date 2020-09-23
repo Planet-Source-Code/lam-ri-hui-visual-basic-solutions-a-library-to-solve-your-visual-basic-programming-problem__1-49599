@@ -1,0 +1,60 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Create Internet Shortcuts</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p class="MsoNormal" align="center"><u><b><font size="5">How to Create Internet 
+Shortcuts</font></b></u></p>
+<p class="MsoNormal"><em><span style="color: black">A great way of advertising 
+your site is to offer a link from the desktop or Start Menu to your site.&nbsp; To do 
+this, you create a URL file.&nbsp; When this file is double-clicked, it opens up the 
+default browser with the Web Site stored in the file. The structure of the file 
+is as follows.</span></em> </p>
+<p><strong><i><span style="color: black">URL File Structure</span></i></strong>
+</p>
+<p><em><span style="color: black">A URL file has the extension .URL, and 
+contains the following text:</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">[InternetShortcut]<br>
+URL=http://www.websiteaddress.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><em><span style="color: black">A Internet Shortcut file that points towards 
+Allapi.net would have the format:</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">[InternetShortcut]<br>
+URL=../&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><strong><i><span style="color: black">Code</span></i></strong> </p>
+<p><em><span style="color: black">The following code creates a Internet Shortcut 
+on the desktop.</span></em> </p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">'declare 
+variables<br>
+Dim StrURLFile As String<br>
+Dim StrURLTarget As String<br>
+Dim FileNum As Integer<br>
+<br>
+'initialise Variables<br>
+StrURLFile = &quot;C:\Windows\Desktop\Home.url&quot;<br>
+StrURLTarget = &quot;../&quot;<br>
+FileNum = FreeFile<br>
+<br>
+'Write the Internet Shortcut file<br>
+Open StrURLFile For Output As FileNum<br>
+Print #FileNum, &quot;[InternetShortcut]&quot;<br>
+Print #FileNum, &quot;URL=&quot; &amp; StrURLTarget<br>
+Close FileNum</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

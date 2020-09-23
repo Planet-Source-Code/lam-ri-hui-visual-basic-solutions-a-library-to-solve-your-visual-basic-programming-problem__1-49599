@@ -1,0 +1,52 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Flip Pictures Horizontally or Vertically</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Flip Pictures Horizontally or 
+Vertically</font></u></b></p>
+<p><i><span style="color: black">You can flip graphics very simply, by using the 
+PaintPicture method of picture boxes and forms. You use a negative height and/or 
+width to make the picture flip.</span></i> </p>
+<p><strong><i><span style="color: black">Normal, straight copy:</span></i></strong>
+</p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Picture2.PaintPicture Picture1.Picture, 0, 0, _<br>
+Picture1.Width, Picture1.Height, 0, 0, _<br>
+Picture1.Width, Picture1.Height, vbSrcCopy</span> </p>
+<p><strong><i><span style="color: black">Horizontal flip:</span></i></strong>
+</p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Picture2.PaintPicture Picture1.Picture, 0, 0, _<br>
+Picture1.Width, Picture1.Height, Picture1.Width, _<br>
+0, -Picture1.Width, Picture1.Height, vbSrcCopy </span></p>
+<p><strong><i><span style="color: black">Vertical flip:</span></i></strong> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Picture2.PaintPicture Picture1.Picture, 0, 0, _<br>
+Picture1.Width, Picture1.Height, 0, Picture1.Height, _<br>
+Picture1.Width, -Picture1.Height, vbSrcCopy </span></p>
+<p><strong><i><span style="color: black">Horizontal and Vertical flip:</span></i></strong>
+</p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Picture2.PaintPicture Picture1.Picture, 0, 0, _<br>
+Picture1.Width, Picture1.Height, Picture1.Width, _<br>
+Picture1.Height, -Picture1.Width, -Picture1.Height, vbSrcCopy </span></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

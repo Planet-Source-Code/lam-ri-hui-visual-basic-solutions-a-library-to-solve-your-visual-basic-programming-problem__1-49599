@@ -1,0 +1,60 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How To Add Shortcuts in Windows 95</title>
+<style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p class="MsoNormal" align="center"><u><b><font size="5">How To Add Shortcuts in 
+Windows 95</font></b></u></p>
+<p class="MsoNormal"><em><span style="color: black">If you would like to add a 
+shortcut to your program in the Start Menu, you can use the undocumented API 
+call that is used in the setupkit.</span></em> </p>
+<p><strong><i><span style="color: black">Declarations</span></i></strong> </p>
+<p><em><span style="color: black">You must declare the following in the 
+declarations section of a project.</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function fCreateShellLink Lib &quot;STKIT432.DLL&quot; _<br>
+(ByVal lpstrFolderName as String, ByVal lpstrLinkName _<br>
+as String, ByVal lpstrLinkPath as String, ByVal _<br>
+lpstrLinkArgs as String) As Long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><strong><i><span style="color: black">Use</span></i></strong> </p>
+<p><em><span style="color: black">To add a shortcut to the Start Menu, you call 
+the function with these parameters:</span></em> </p>
+<!--mstheme--></font><!--msthemelist--><table type="disc" style="margin-bottom: 0in" border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica"><em>Where to place the link in relation to the Programs 
+  folder on the Start Menu</em> <!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica"><em>Name or Text to appear in the link</em> <!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica"><em>Path of the file to link to</em> <!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica"><em>Arguments for the file</em> <!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="arial, Arial, Helvetica">
+<p class="MsoNormal"><em><span style="color: black">For instance, to add a 
+shortcut to the desktop, you would use the following code:</span></em> </p>
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: 0in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">lngResult = fCreateShellLink(&quot;..\..\Desktop&quot;, _</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<p class="MsoNormal">&quot;Link to my program&quot;, &quot;C:\Path\Program.exe&quot;,&quot;&quot;)</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>
