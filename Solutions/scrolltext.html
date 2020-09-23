@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Scroll Text Vertically on The Picture Box</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Scroll Text Vertically on The 
+Picture Box</font></u></b></p>
+<p><i><span style="color:black">If you want to scroll text vertically, all you 
+need is a timer, a picturebox and the BitBlt API function. Put the following in 
+the declare section of a form:</span></i> </p>
+<p><i><span style="color:black">Declarations</span></i> </p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Const SRCCOPY = &amp;HCC0020<br>
+Const ShowText$ = &quot;This line of text scrolls vertically.&quot;<br>
+<br>
+Private Declare Function BitBlt Lib &quot;gdi32&quot; _<br>
+(ByVal hDestDC As Long, ByVal x As Long, ByVal y As _<br>
+Long, ByVal nWidth As Long, ByVal nHeight As Long, _<br>
+ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal _<br>
+ySrc As Long, ByVal dwRop As Long) As Long<br>
+<br>
+Dim ShowIt%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color:black">Code</span></i> </p>
+<p><i><span style="color:black">Add a picturebox to the form and set its 
+scalemode to pixel (3). Add a timer to the form with an interval of about 25. 
+Now put this code in the timer's<br>
+timer event: </span></i></p>
+<p>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;color:black">
+Private Sub Timer1_Timer()<br>
+<br>
+Dim Ret As Integer<br>
+<br>
+If (ShowIt% = 100) Then 'play with this value for desired effect<br>
+&nbsp;&nbsp;&nbsp; Picture1.CurrentX = 0<br>
+&nbsp;&nbsp;&nbsp; Picture1.CurrentY = Picture1.ScaleHeight - 15 'play with this also<br>
+&nbsp;&nbsp;&nbsp; Picture1.Print ShowText$<br>
+&nbsp;&nbsp;&nbsp; ShowIt% = 0<br>
+Else<br>
+&nbsp;&nbsp;&nbsp; Ret = BitBlt(Picture1.hDC, 0, 0, Picture1.ScaleWidth, _<br>
+&nbsp;&nbsp;&nbsp; Picture1.ScaleHeight - 1, Picture1.hDC, 0, 1, SRCCOPY)<br>
+&nbsp;&nbsp;&nbsp; ShowIt% = ShowIt% + 1<br>
+End If&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

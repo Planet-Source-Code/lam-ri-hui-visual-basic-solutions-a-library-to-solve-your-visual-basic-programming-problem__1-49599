@@ -1,0 +1,62 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Start a Screen Saver Using API</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Start a Screen Saver Using API</font></u></b></p>
+<p><i><span style="color: black">The sample code below shows how to start a 
+Visual Basic screen saver by sending a Windows message to the Control-menu box 
+on a form.</span></i> </p>
+<p><i><span style="color: black">Microsoft Windows starts screen savers through 
+the System-menu box on a form. The System-menu box is also known as the 
+Control-menu box in Visual Basic. You can send Windows messages to the 
+Control-menu box by using the SendMessage Windows API (application programming 
+interface) function. </span></i></p>
+<p><i><span style="color: black">Declarations</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">#If 
+Win32 Then<br>
+<br>
+&nbsp;&nbsp;&nbsp; Private Declare Function SendMessage Lib &quot;user32&quot; _<br>
+&nbsp;&nbsp;&nbsp; Alias &quot;SendMessageA&quot; (ByVal hWnd As Long, ByVal wMsg _<br>
+&nbsp;&nbsp;&nbsp; As Long, ByVal wParam As Long, ByVal lParam As Long) _<br>
+&nbsp;&nbsp;&nbsp; As Long&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp; Const WM_SYSCOMMAND = &amp;H112&amp;<br>
+&nbsp;&nbsp;&nbsp; Const SC_SCREENSAVE = &amp;HF140&amp;<br>
+<br>
+#Else<br>
+<br>
+&nbsp;&nbsp;&nbsp; Private Declare Function SendMessage Lib &quot;User&quot; _<br>
+&nbsp;&nbsp;&nbsp; (ByVal hWnd As Integer, ByVal wMsg As Integer, ByVal _<br>
+&nbsp;&nbsp;&nbsp; wParam As Integer, lParam As Any) As Long<br>
+<br>
+&nbsp;&nbsp;&nbsp; Const WM_SYSCOMMAND = &amp;H112<br>
+&nbsp;&nbsp;&nbsp; Const SC_SCREENSAVE = &amp;HF140&amp;<br>
+<br>
+#End If&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">Code</span></i> </p>
+<p><i><span style="color: black">To start the screen saver, use the following 
+code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+result As Long<br>
+result = SendMessage(Form1.hWnd, WM_SYSCOMMAND, SC_SCREENSAVE, 0&amp;)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+</p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

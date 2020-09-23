@@ -1,0 +1,60 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Only Allow Numbers into Textboxes</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Only Allow Numbers into Textboxes</font></u></b></p>
+<p><i><span style="color: black">This is one of several ways of stopping a user 
+enter letters into a text box. It sets the window style for the text box, 
+stopping it from accepting letters. This could also box done in the KeyPress 
+event of the text box, just intercepting letters, but this way does not need 
+code in the events of the text box.</span></i> </p>
+<p><i><span style="color: black">Declarations</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function GetWindowLong Lib &quot;user32&quot; _<br>
+Alias &quot;GetWindowLongA&quot; _<br>
+(ByVal hwnd As Long, ByVal nIndex As Long) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function SetWindowLong Lib &quot;user32&quot; Alias _<br>
+&quot;SetWindowLongA&quot; _<br>
+(ByVal hwnd As Long, ByVal nIndex As Long, _<br>
+ByVal dwNewLong As Long) As Long</span> </p>
+<p><i><span style="color: black">Functions</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Const GWL_STYLE = (-16)<br>
+Public Const ES_NUMBER = &amp;H2000&amp;</span> </p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Public 
+Sub SetNumber(NumberText As TextBox, Flag As Boolean)<br>
+Dim curstyle As Long<br>
+Dim newstyle As Long<br>
+<br>
+curstyle = GetWindowLong(NumberText.hwnd, GWL_STYLE)<br>
+<br>
+If Flag Then<br>
+&nbsp;&nbsp; curstyle = curstyle Or ES_NUMBER<br>
+Else<br>
+&nbsp;&nbsp; curstyle = curstyle And (Not ES_NUMBER)<br>
+End If<br>
+<br>
+newstyle = SetWindowLong(NumberText.hwnd, GWL_STYLE, curstyle)<br>
+NumberText.Refresh<br>
+End Sub</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

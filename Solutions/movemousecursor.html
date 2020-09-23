@@ -1,0 +1,37 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Move The Mouse Cursor</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Move The Mouse Cursor</font></u></b></p>
+<p class="MsoNormal"><em><span style="color: black">You can use the SetCursorPos 
+Api function. It accepts two parameters. These are the x position and the y 
+position in screen pixel coordinates. You can get the size of the screen by 
+calling GetSystemMetrics function with the correct constants. This example puts 
+the mouse cursor in the top left hand corner.</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">t&amp; = 
+SetCursorPos(0,0) </span></p>
+<p><em><span style="color: black">This will only work if the formula has been 
+declared in the declarations section:</span></em> </p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Declare 
+Function SetCursorPos&amp; Lib &quot;user32&quot; _<br>
+(ByVal x as long, ByVal y as long)</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

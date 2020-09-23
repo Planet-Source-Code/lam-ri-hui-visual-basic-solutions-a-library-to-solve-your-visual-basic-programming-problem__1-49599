@@ -1,0 +1,112 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Add an Icon to The Tray</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to Add an Icon to The Tray</font></b></u></p>
+<p><i><span style="color: black">Declarations</span></i> </p>
+<p><i><span style="color: black">Add the following code to the declarations 
+section of your project.</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function Shell_NotifyIcon Lib &quot;shell32.dll&quot; Alias _<br>
+&quot;Shell_NotifyIconA&quot; (ByVal dwMessage As Long, lpData As _<br>
+NOTIFYICONDATA) As Long<br>
+<br>
+Public Type NOTIFYICONDATA<br>
+&nbsp;&nbsp;&nbsp; cbSize As Long<br>
+&nbsp;&nbsp;&nbsp; hwnd As Long<br>
+&nbsp;&nbsp;&nbsp; uID As Long<br>
+&nbsp;&nbsp;&nbsp; uFlags As Long<br>
+&nbsp;&nbsp;&nbsp; uCallbackMessage As Long<br>
+&nbsp;&nbsp;&nbsp; hIcon As Long<br>
+&nbsp;&nbsp;&nbsp; szTip As String * 64<br>
+End Type<br>
+<br>
+Public Const NIM_ADD = &amp;H0<br>
+Public Const NIM_MODIFY = &amp;H1<br>
+Public Const NIM_DELETE = &amp;H2<br>
+Public Const NIF_MESSAGE = &amp;H1<br>
+Public Const NIF_ICON = &amp;H2<br>
+Public Const NIF_TIP = &amp;H4<br>
+<br>
+'Make your own constant, e.g.:<br>
+Public Const NIF_DOALL = NIF_MESSAGE Or NIF_ICON Or NIF_TIP<br>
+<br>
+Public Const WM_MOUSEMOVE = &amp;H200<br>
+Public Const WM_LBUTTONDBLCLK = &amp;H203<br>
+Public Const WM_LBUTTONDOWN = &amp;H201<br>
+Public Const WM_RBUTTONDOWN = &amp;H204&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">2) Add a form to the project, and add the 
+following code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Sub CreateIcon()<br>
+Dim Tic As NOTIFYICONDATA<br>
+Tic.cbSize = Len(Tic)<br>
+Tic.hwnd = Picture1.hwnd<br>
+Tic.uID = 1&amp;<br>
+Tic.uFlags = NIF_DOALL<br>
+Tic.uCallbackMessage = WM_MOUSEMOVE<br>
+Tic.hIcon = Picture1.Picture<br>
+Tic.szTip = &quot;Visual Basic Demo Project&quot; &amp; Chr$(0)<br>
+erg = Shell_NotifyIcon(NIM_ADD, Tic)<br>
+End Sub<br>
+<br>
+Public Sub DeleteIcon()<br>
+Dim Tic As NOTIFYICONDATA<br>
+Tic.cbSize = Len(Tic)<br>
+Tic.hwnd = Picture1.hwnd<br>
+Tic.uID = 1&amp;<br>
+erg = Shell_NotifyIcon(NIM_DELETE, Tic)<br>
+End Sub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">3) Add two command buttons (command1 and 
+command2) and a picture box (picture1) to the form.&nbsp; For the picture property of 
+the form, select an icon.</span></i> </p>
+<p><i><span style="color: black">To to Click event of Command1, add the 
+following code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+CreateIcon </span></p>
+<p><i><span style="color: black">To the Click event of Command2, add the 
+following code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+DeleteIcon </span></p>
+<p><i><span style="color: black">To the MouseMove event of Picture1, add the 
+following code:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">X = X 
+/ Screen.TwipsPerPixelX</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Select Case X<br>
+Case WM_LBUTTONDOWN<br>
+Caption = &quot;Left Click&quot;<br>
+Case WM_RBUTTONDOWN<br>
+Caption = &quot;Right Click&quot;<br>
+Case WM_MOUSEMOVE<br>
+Caption = &quot;Move&quot;<br>
+Case WM_LBUTTONDBLCLK<br>
+Caption = &quot;Double Click&quot;<br>
+End Select&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">4) Run the project.&nbsp; Click on Command1.&nbsp; The 
+icon you selected in Picture1 should appear in the tray area.&nbsp; Now, move the 
+mouse over the icon.&nbsp; The caption of the form should change to &quot;Move&quot;.&nbsp; Left 
+click the icon, and the caption will change to &quot;Left&quot;.&nbsp; Right click the icon, 
+and the caption will change to &quot;Right&quot;.&nbsp; Double Click the icon, and the caption 
+will change to &quot;Double&quot;.&nbsp; To delete the icon from the tray, click Command2.
+</span></i></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

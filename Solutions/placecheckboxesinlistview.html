@@ -1,0 +1,129 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Place Checkboxes in Listview</title>
+<style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Place Checkboxes in Listview</font></u></b></p>
+<p><i><span style="color: black">This tip demonstrates how to add check boxes 
+into the ListView control.</span></i> </p>
+<p><i><span style="color: black">Declarations</span></i> </p>
+<p><i><span style="color: black">Add the following code to the declarations 
+section of a module.</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Option Explicit<br>
+&nbsp;<br>
+Public Declare Function SendMessageLong _<br>
+Lib &quot;user32&quot; _<br>
+Alias &quot;SendMessageA&quot; _<br>
+(ByVal hwnd As Long, _<br>
+ByVal Msg As Long, _<br>
+ByVal wParam As Long, _<br>
+ByVal lParam As Long) As Long<br>
+&nbsp;<br>
+Public Declare Function SendMessageAny _<br>
+Lib &quot;user32&quot; _<br>
+Alias &quot;SendMessageA&quot; _<br>
+(ByVal hwnd As Long, _<br>
+ByVal Msg As Long, _<br>
+ByVal wParam As Long, _<br>
+lParam As Any) As Long<br>
+&nbsp;<br>
+Public Const MAX_PATH = 260<br>
+Public Const LVM_FIRST As Long = &amp;H1000<br>
+Public Const LVM_SETEXTENDEDLISTVIEWSTYLE _<br>
+As Long = (LVM_FIRST + 54)<br>
+Public Const LVM_GETEXTENDEDLISTVIEWSTYLE _<br>
+As Long = (LVM_FIRST + 55)<br>
+Public Const LVS_EX_FULLROWSELECT As Long = &amp;H20<br>
+Public Const LVS_EX_GRIDLINES As Long = &amp;H1<br>
+Public Const LVS_EX_CHECKBOXES As Long = &amp;H4<br>
+Public Const LVM_GETITEMSTATE As Long = (LVM_FIRST + 44)<br>
+Public Const LVM_GETITEMTEXT As Long = (LVM_FIRST + 45)<br>
+Public Const LVIS_STATEIMAGEMASK As Long = &amp;HF000<br>
+&nbsp;<br>
+Public Type LV_ITEM<br>
+&nbsp;&nbsp;&nbsp; mask As Long<br>
+&nbsp;&nbsp;&nbsp; iItem As Long<br>
+&nbsp;&nbsp;&nbsp; iSubItem As Long<br>
+&nbsp;&nbsp;&nbsp; state As Long<br>
+&nbsp;&nbsp;&nbsp; stateMask As Long<br>
+&nbsp;&nbsp;&nbsp; pszText As String<br>
+&nbsp;&nbsp;&nbsp; cchTextMax As Long<br>
+&nbsp;&nbsp;&nbsp; iImage As Long<br>
+&nbsp;&nbsp;&nbsp; lParam As Long<br>
+&nbsp;&nbsp;&nbsp; iIndent As Long<br>
+End Type</span> </p>
+<!--mstheme--></font><!--msthemelist--><table type="disc" style="margin-bottom: 0in" border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica">Place a Listview1, Combo1 and Commandbutton1 on Form1.
+  <!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica">Add one Column Header to the Listview with the text 
+  &quot;Fonts&quot; and set ListView1.View = lvwReport. <!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="../_themes/studio/astubul1.gif" width="10" height="10" hspace="16" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="arial, Arial, Helvetica">Set the Combo1 style to 2 - Dropdown List. <!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="arial, Arial, Helvetica">
+<p class="MsoNormal"><i><span style="color: black">Form Code</span></i> </p>
+<p><i><span style="color: black">Add the following code to Form1 </span></i></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub Form_Load()<br>
+'puts all fonts in listview1<br>
+For Ifor&amp; = 0 To Screen.FontCount - 1<br>
+&nbsp;&nbsp;&nbsp; Set itmX = ListView1.ListItems.Add(, , CStr(Screen.Fonts(Ifor&amp;)))<br>
+Next Ifor&amp;<br>
+'addes the checkboxes to listview1<br>
+rStyle = rStyle Or LVS_EX_CHECKBOXES<br>
+r&amp; = SendMessageLong(ListView1.hwnd, _<br>
+LVM_SETEXTENDEDLISTVIEWSTYLE, 0&amp;, rStyle)<br>
+End Sub<br>
+&nbsp;<br>
+Private Sub Command1_Click()<br>
+Dim LI As LV_ITEM<br>
+Combo1.Clear<br>
+'looks for checked items<br>
+For i&amp; = 0 To ListView1.ListItems.Count - 1<br>
+&nbsp;&nbsp; r&amp; = SendMessageLong(ListView1.hwnd, _<br>
+&nbsp;&nbsp; LVM_GETITEMSTATE, i&amp;, LVIS_STATEIMAGEMASK)<br>
+&nbsp;&nbsp; 'if r returns 8192 means that the checkbox is checked<br>
+&nbsp;&nbsp;&nbsp; If r&amp; = 8192 Then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LI.cchTextMax = MAX_PATH<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LI.pszText = Space$(MAX_PATH)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Call SendMessageAny(ListView1.hwnd, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LVM_GETITEMTEXT, i&amp;, LI)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'puts the text of the checked listitem in the combo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Combo1.AddItem LI.pszText<br>
+&nbsp;&nbsp; End If<br>
+Next i&amp;<br>
+'shows the first item of the combo<br>
+If Combo1.ListCount &gt; 0 Then Combo1.Text = _<br>
+Combo1.List(0)<br>
+End Sub</span> </p>
+<p><i><span style="color: black">Run the app. (F5) you´ll see all fonts in the 
+Listview with checkboxes, check some items and click on Commandbutton1, then 
+take a look at combo1.</span></i> </p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

@@ -1,0 +1,115 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Add Windows XP Theme to an Application</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p class="MsoNormal" align="center"><b><u><font size="5">How to</font><font size="5" face="Arial"> Add Windows XP 
+Theme to an Application</font></u></b></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">
+Microsoft Windows XP is the latest version of Windows. It includes many new 
+features and updates to the Common Controls Library. One of the main features is 
+the Windows XP Themes. This allows you to select a theme, and the entire look 
+and feel of Windows, as you know it will change. However, if you were to write a 
+program in VB, the buttons, textboxes you were to use, would not change. You 
+need to tell Windows XP that you are going to use the new version of the Common 
+Controls Library, and to do this you must include an application manifest. A 
+manifest is an XML document that Windows XP searches for in the application’s 
+directory when you open an application. This manifest tells Windows XP to use 
+the new version of COMCTL32.DLL (Version 6). Here is a brief tutorial on 
+creating an application manifest, for Visual Basic:</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">Load 
+Microsoft Visual Basic and start a new project</span></p>
+<p align="center" style="text-align: center"><img border="0" src="image001.JPG" width="415" height="323"></p>
+<p><span style="font-size: 10.0pt; font-family: Verdana">Now add a few standard 
+controls, a button, a checkbox, two option buttons and a text box</span> </p>
+<p class="MsoNormal" align="center" style="text-align: center">
+<img border="0" src="image002.JPG" width="415" height="323"></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">Give 
+them captions, and program the button to Exit when clicked.</span></p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: navy">Private 
+Sub </span><span style="font-size: 10.0pt; font-family: Courier New">
+Command1_Click()<br>
+<span style="color: navy">&nbsp; &nbsp;&nbsp;&nbsp; Unload Me<br>
+End Sub</span></span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">
+COMCTL32.DLL exports a function called InitCommonControls. This is exported in 
+COMCTL32.DLL versions from Windows 95. This needs to be called when the 
+application is started, to ensure that the common controls library is opened. 
+The declaration is not available in the API viewer. Make sure that you use 
+Form_Initialize and not Form_Load, to enter the code. So the code in the form 
+should now read:</span></p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: navy">Option 
+Explicit<br>
+Private Declare Function </span>
+<span style="font-size: 10.0pt; font-family: Courier New">InitCommonControls<span style="color: navy"> 
+Lib </span>&quot;comctl32.dll&quot;<span style="color: navy"> </span>()<span style="color: navy"> 
+As Long</span></span></p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: navy">Private 
+Sub </span><span style="font-size: 10.0pt; font-family: Courier New">
+Command1_Click()<br>
+<span style="color: navy">&nbsp;&nbsp;&nbsp; Unload Me<br>
+End Sub</span></span></p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: navy">Private 
+Sub </span><span style="font-size: 10.0pt; font-family: Courier New">
+Form_Initialize()<br>
+&nbsp;&nbsp;&nbsp; InitCommonControls<br>
+<span style="color: navy">End Sub</span>&nbsp;</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">Now 
+we need to compile this into an executable file (the manifest will only work 
+when run as an EXE) and actually create the manifest. I have called my 
+application COMCTLTest.EXE. You can call your executable anything, but that name 
+needs to correspond with the name on the manifest.&nbsp;</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">Go to 
+the folder, at which you have compiled the application into, load notepad and 
+enter the following:&nbsp;</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">&lt;?xml 
+version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;<br>
+&lt;assembly xmlns=&quot;urn:schemas-microsoft-com:asm.v1&quot; manifestVersion=&quot;1.0&quot;&gt;<br>
+&lt;assemblyIdentity type=&quot;win32&quot; processorArchitecture=&quot;*&quot; version=&quot;6.0.0.0&quot; 
+name=&quot;mash&quot;/&gt;<br>
+&lt;description&gt;<b><span style="color: red">Enter your Description Here</span></b>&lt;/description&gt;<br>
+&lt;dependency&gt;</span><br>
+<span style="font-size: 10.0pt; font-family: Verdana">&nbsp;&nbsp; &lt;dependentAssembly&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;assemblyIdentity<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type=&quot;win32&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name=&quot;Microsoft.Windows.Common-Controls&quot; version=&quot;6.0.0.0&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; language=&quot;*&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; processorArchitecture=&quot;*&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; publicKeyToken=&quot;6595b64144ccf1df&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /&gt;<br>
+&nbsp;&nbsp; &lt;/dependentAssembly&gt;<br>
+&lt;/dependency&gt;<br>
+&lt;/assembly&gt;</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">Save 
+this as:</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">&lt;YOUR 
+EXE NAME&gt;.EXE.MANIFEST</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">So 
+because I compiled my application as COMCTLTest.exe I would save my manifest as: 
+COMCTLTest.EXE.MANIFEST</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">Now, 
+you are ready to run your application. Double click on the executable, and there 
+you are!!</span></p>
+<p align="center" style="text-align: center"><img border="0" src="image003.JPG" width="320" height="240"></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

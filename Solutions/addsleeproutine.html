@@ -1,0 +1,33 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Add a Sleep Routine</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333">
+<!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Add a Sleep Routine</font></u></b></p>
+<p class="MsoNormal"><strong style="font-weight: 400">
+<span style="font-family: Verdana">A</span><span style="font-size: 12.0pt; font-family: Verdana">dd 
+a sleep routine (without timers and loops, and with still 100% CPU Time;-)</span></strong><span style="font-size: 12.0pt; font-family: Times New Roman">
+</span></p>
+<p class="MsoNormal"><em><span style="color: #000000">I</span><span style="color: black">n 
+declarations: </span></em></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Declare Sub Sleep Lib &quot;kernel32&quot; (ByVal dwMilliseconds As Long)</span>
+</p>
+<p><em><span style="color: black">anywhere in the form: </span></em></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Call 
+Sleep(5000) ' for a delay of 5 seconds.</span></p>
+<p class="MsoNormal"></p>
+
+<!--mstheme--></font></body>
+
+</html>

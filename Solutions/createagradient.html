@@ -1,0 +1,54 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Create a Gradient on Form</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Create a Gradient on Form</font></u></b></p>
+<p><i><span style="color: black">Most setup routines use the standard 
+blue-to-black dithered screen as a background for the program.&nbsp; This tip 
+demontrates how to create this type of effect quickly.</span></i> </p>
+<p><i><span style="color: black">Code</span></i> </p>
+<p><i><span style="color: black">Copy the following code into the form.</span></i>
+</p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Sub 
+Dither(vForm As Form)<br>
+Dim intLoop As Integer<br>
+vForm.DrawStyle = vbInsideSolid<br>
+vForm.DrawMode = vbCopyPen<br>
+vForm.ScaleMode = vbPixels<br>
+vForm.DrawWidth = 2<br>
+vForm.ScaleHeight = 256<br>
+For intLoop = 0 To 255<br>
+vForm.Line (0, intLoop)-(Screen.Width, intLoop - 1), RGB(0, 0, 255 - intLoop), 
+B&nbsp;<br>
+Next intLoop<br>
+End Sub<br>
+<br>
+Private Sub Form_Activate()<br>
+Dither Me<br>
+End Sub&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">Set the AutoRedraw of the form to True.<br>
+If you want to make a Red painted form use: </span></i></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+vForm.Line (0, intLoop)-(Screen.Width, intLoop - 1), RGB(255 - intLoop, 0, 0), B
+</span></p>
+<p><i><span style="color: black">Run the program.</span></i></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

@@ -1,0 +1,113 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How To Add An About Box To The Control Menu</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How To Add An About Box To The Control 
+Menu</font></b></u></p>
+<p><i><span style="color: black">Note : This only works in Visual Basic 5 and 6, 
+as previous versions of VB do not support the AddressOf operator.</span></i> </p>
+<p>Procedure :</p>
+<p><i><span style="color: black">1. Start a new Standard-Exe project, form1 is 
+created by default.</span></i> </p>
+<p><i><span style="color: black">2. Add a standard module to the project, 
+project menu and click 'add module'</span></i> </p>
+<p><i><span style="color: black">3. The new module should open up by default. 
+Add the following code.</span></i> </p>
+<p><i><span style="color: black">Remember and I keep telling people you write to 
+me and say my samples do not work. Make sure that the API declarations are one 
+line</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Option Explicit</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function AppendMenu Lib &quot;user32&quot; Alias _<br>
+&quot;AppendMenuA&quot; (ByVal hMenu As Long, ByVal wFlags _<br>
+As Long, ByVal wIDNewItem As Long, ByVal _<br>
+lpNewItem As String) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function GetSystemMenu Lib &quot;user32&quot; _<br>
+(ByVal hWnd As Long, ByVal bRevert As Long) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function SetWindowLong Lib &quot;user32&quot; _<br>
+Alias &quot;SetWindowLongA&quot; (ByVal hWnd As Long, _<br>
+ByVal nIndex As Long, ByVal dwNewLong As Long) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function CallWindowProc Lib &quot;user32&quot; _<br>
+Alias &quot;CallWindowProcA&quot; (ByVal lpPrevWndFunc _<br>
+As Long, ByVal hWnd As Long, ByVal Msg As _<br>
+Long, ByVal wParam As Long, ByVal lParam As Long) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Const WM_SYSCOMMAND = &amp;H112<br>
+Public Const MF_SEPARATOR = &amp;H800&amp;<br>
+Public Const MF_STRING = &amp;H0&amp;<br>
+Public Const GWL_WNDPROC = (-4)<br>
+Public Const IDM_ABOUT As Long = 1010<br>
+Public lProcOld As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Function SysMenuHandler(ByVal hWnd _<br>
+As Long, ByVal iMsg As Long, ByVal wParam _<br>
+As Long, ByVal lParam As Long) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">If 
+iMsg = WM_SYSCOMMAND Then<br>
+&nbsp;&nbsp;&nbsp; If wParam = IDM_ABOUT Then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MsgBox &quot;About . . .&quot;, vbInformation, &quot;About&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exit Function<br>
+&nbsp;&nbsp;&nbsp; End If<br>
+End If</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+SysMenuHandler = CallWindowProc(lProcOld, _<br>
+hWnd, iMsg, wParam, lParam)<br>
+End Function</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Function SubClass(FormName As Form)<br>
+Dim lhSysMenu As Long, lRet As Long<br>
+<br>
+lhSysMenu = GetSystemMenu(FormName.hWnd, 0&amp;)<br>
+lRet = AppendMenu(lhSysMenu, MF_SEPARATOR, 0&amp;, _<br>
+vbNullString)<br>
+lRet = AppendMenu(lhSysMenu, MF_STRING, _<br>
+IDM_ABOUT, &quot;About...&quot;)</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+FormName.Show<br>
+lProcOld = SetWindowLong(FormName.hWnd, GWL_WNDPROC, _<br>
+AddressOf SysMenuHandler)<br>
+End Function</span> </p>
+<p><i><span style="color: black">4. Open up the code window for form1 and type 
+the following</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Option Explicit</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub Form_Load()<br>
+Dim d As String<br>
+d = SubClass(Form1) ' Type the name of the form d = SubClass(&lt;FormName&gt;)<br>
+End Sub</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub Form_Unload(Cancel As Integer)<br>
+SetWindowLong Me.hWnd, GWL_WNDPROC, lProcOld<br>
+End Sub</span> </p>
+<p><i><span style="color: black">5. I have altered the code to work with any 
+form just specify the form name where I have commented the code.</span></i> </p>
+<p><i><span style="color: black">6. Run the project by clicking on run on the 
+toolbar or from the run menu.</span></i> </p>
+<p class="MsoNormal"><i><span style="color: black">If you click on the control 
+menu then you will see two items. One a separator and the other which says 
+'About...'. Click on about and a message box appears with my copyright.</span></i>
+</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

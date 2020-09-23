@@ -1,0 +1,46 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Set The ToolTipText of a ListBox</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Set The ToolTipText of a ListBox</font></u></b></p>
+<p><i><span style="color: black">If the width of a ListBox control is too small 
+to show the content I have found it practical to set the ToolTipText property to 
+reflect on the item the mouse is hovering over.</span></i> </p>
+<p><i><span style="color: black">Code</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Sub List1_MouseMove(Button As _<br>
+Integer, Shift As Integer, X As Single, Y As Single)</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+YPos As Integer, iOldFontSize As Integer<br>
+iOldFontSize = Me.Font.Size<br>
+Me.Font.Size = List1.Font.Size<br>
+YPos = Y \ Me.TextHeight(&quot;Xyz&quot;) + List1.TopIndex<br>
+Me.Font.Size = iOldFontSize<br>
+If YPos &lt; List1.ListCount Then<br>
+List1.ToolTipText = List1.List(YPos)<br>
+Else<br>
+List1.ToolTipText = &quot;&quot;<br>
+End If<br>
+End Sub</span> </p>
+<p><i><span style="color: black">I found this to be more practical than using 
+Windows API to get the horizontal scrollbar. </span></i></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

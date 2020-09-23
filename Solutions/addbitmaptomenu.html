@@ -1,0 +1,109 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Add Bitmaps to Menus</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How To Add Bitmaps To Menus</font></b></u></p>
+<p><i><span style="color: black">Declarations</span></i> </p>
+<p><i><span style="color: black">Add the following code to the declarations 
+section of a module:</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function GetMenu Lib &quot;user32&quot; _<br>
+(ByVal hwnd As Long) As Long<br>
+<br>
+Declare Function GetSubMenu Lib &quot;user32&quot; _<br>
+(ByVal hMenu As Long, ByVal nPos As Long) As Long<br>
+<br>
+Declare Function GetMenuItemID Lib &quot;user32&quot; _<br>
+(ByVal hMenu As Long, ByVal nPos As Long) As Long<br>
+<br>
+Declare Function SetMenuItemBitmaps Lib &quot;user32&quot; _<br>
+(ByVal hMenu As Long, ByVal nPosition As Long, _<br>
+ByVal wFlags As Long, ByVal hBitmapUnchecked As Long, _<br>
+ByVal hBitmapChecked As Long) As Long<br>
+<br>
+Public Const MF_BITMAP = &amp;H4&amp;<br>
+<br>
+Type MENUITEMINFO<br>
+&nbsp;&nbsp;&nbsp; cbSize As Long<br>
+&nbsp;&nbsp;&nbsp; fMask As Long<br>
+&nbsp;&nbsp;&nbsp; fType As Long<br>
+&nbsp;&nbsp;&nbsp; fState As Long<br>
+&nbsp;&nbsp;&nbsp; wID As Long<br>
+&nbsp;&nbsp;&nbsp; hSubMenu As Long<br>
+&nbsp;&nbsp;&nbsp; hbmpChecked As Long<br>
+&nbsp;&nbsp;&nbsp; hbmpUnchecked As Long<br>
+&nbsp;&nbsp;&nbsp; dwItemData As Long<br>
+&nbsp;&nbsp;&nbsp; dwTypeData As String<br>
+&nbsp;&nbsp;&nbsp; cch As Long<br>
+End Type<br>
+<br>
+Declare Function GetMenuItemCount Lib &quot;user32&quot; _<br>
+(ByVal hMenu As Long) As Long<br>
+<br>
+Declare Function GetMenuItemInfo Lib &quot;user32&quot; _<br>
+Alias &quot;GetMenuItemInfoA&quot; (ByVal hMenu As Long, _<br>
+ByVal un As Long, ByVal b As Boolean, _<br>
+lpMenuItemInfo As MENUITEMINFO) As Boolean<br>
+<br>
+Public Const MIIM_ID = &amp;H2<br>
+Public Const MIIM_TYPE = &amp;H10<br>
+Public Const MFT_STRING = &amp;H0&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">Code</span></i> </p>
+<p style="text-indent: -.25in; margin-left: .5in">
+<span style="font-size: 10.0pt; font-family: Symbol">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Add one form to the project. </p>
+<p style="text-indent: -.25in; margin-left: .5in">
+<span style="font-size: 10.0pt; font-family: Symbol">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Add a picturebox (Autosize = True) with a bitmap (not an icon!!!), 
+max. 13X13 </p>
+<p style="text-indent: -.25in; margin-left: .5in">
+<span style="font-size: 10.0pt; font-family: Symbol">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Add a commandbutton with following code: </p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Private 
+Sub Command1_Click()<br>
+<br>
+'Get the menuhandle of your app<br>
+hMenu&amp; = GetMenu(Form1.hwnd)<br>
+<br>
+'Get the handle of the first submenu (Hello)<br>
+hSubMenu&amp; = GetSubMenu(hMenu&amp;, 0)<br>
+<br>
+'Get the menuId of the first entry (Bitmap)<br>
+hID&amp; = GetMenuItemID(hSubMenu&amp;, 0)<br>
+<br>
+'Add the bitmap<br>
+<br>
+SetMenuItemBitmaps hMenu&amp;, hID&amp;, MF_BITMAP, _<br>
+Picture1.Picture, _<br>
+Picture1.Picture<br>
+<br>
+<br>
+'You can add two bitmaps to a menuentry<br>
+'One for the checked and one for the unchecked<br>
+'state.<br>
+<br>
+End Sub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p style="text-indent: -.25in; margin-left: .5in">
+<span style="font-size: 10.0pt; font-family: Symbol">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Run the Project and click the button.</p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

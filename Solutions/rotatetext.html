@@ -1,0 +1,116 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Rotate Text</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Rotate Text</font></u></b></p>
+<p><span style="color: black">Use this subroutine to put text on your form or 
+picture box at different angles. For vertically down, use the angle on 270, and 
+vertically up, use the angle of 90.</span> </p>
+<p><span style="color: black">Declarations</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Declare Function CreateFont Lib _<br>
+&quot;gdi32&quot; Alias &quot;CreateFontA&quot; (ByVal _<br>
+Height As Long, ByVal Width As Long, _<br>
+ByVal Escapement As Long, ByVal _<br>
+Orientation As Long, ByVal Weight _<br>
+As Long, ByVal Italic As Long, ByVal _<br>
+Underline As Long, ByVal StrikeOut As _<br>
+Long, ByVal CharSet As Long, ByVal _<br>
+OutputPrecision As Long, ByVal _<br>
+ClipPrecision As Long, ByVal Quality _<br>
+As Long, ByVal PitchAndFamily As _<br>
+Long, ByVal Face As String) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Declare Function SelectObject _<br>
+Lib &quot;gdi32&quot; (ByVal hdc As Long, ByVal _<br>
+hObject As Long) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Declare Function DeleteObject _<br>
+Lib &quot;gdi32&quot; (ByVal hObject As Long) As Long</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Const FW_BOLD = 700<br>
+Public Const FW_NORMAL = 400<br>
+Public Const ANSI_CHARSET = 0<br>
+Public Const OUT_DEFAULT_PRECIS = 0<br>
+Public Const CLIP_DEFAULT_PRECIS = 0<br>
+Public Const PROOF_QUALITY = 2<br>
+Public Const DEFAULT_PITCH = 0<br>
+Public Const FF_DONTCARE = 0</span> </p>
+<p><i><span style="color: black">Module Code</span></i> </p>
+<p><i><span style="color: black">Paste the following code into a module.</span></i>
+</p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Sub dotext(angpict As Object, _<br>
+angfont As StdFont, angtext As String, _<br>
+angle As Single)</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">' 
+Parameters:<br>
+' angpict: picture box, etc to draw text in<br>
+' angfont: Font object with info about font to use<br>
+' angtext: text to print<br>
+' angle : angle, measured anti-clockwise from horizontal: -----&gt;</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+newfont As Long<br>
+Dim oldfont As Long<br>
+Dim angweight As Long<br>
+<br>
+If angfont.Bold = True Then&nbsp;<br>
+&nbsp; angweight = FW_BOLD&nbsp;<br>
+Else<br>
+&nbsp; angweight = FW_NORMAL<br>
+End If</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+newfont = CreateFont(angfont.Size * 2, _<br>
+0, angle * 10, 0, angweight, _<br>
+angfont.Italic, angfont.Underline, _<br>
+angfont.Strikethrough, ANSI_CHARSET, _<br>
+OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, _<br>
+PROOF_QUALITY, DEFAULT_PITCH Or FF_DONTCARE, _<br>
+angfont.Name)</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+oldfont = SelectObject(angpict.hdc, newfont)</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+angpict.CurrentX = 1000<br>
+angpict.CurrentY = 1000<br>
+angpict.Print angtext<br>
+<br>
+newfont = SelectObject(angpict.hdc, oldfont)</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">If 
+DeleteObject(newfont) = 0 Then<br>
+' could not remove font from GDI heap<br>
+End If</span> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">End 
+Sub</span> </p>
+<p><i><span style="color: black">Breakdown:</span></i> </p>
+<p><i><span style="color: black">This sub works by creating a logical font in 
+the GDI heap. It then sets the font of the control to this logical font, keeping 
+a record of the old logical font. It then prints the font, then resets the old 
+font. Lastly, to free up memory, it deletes the logical font from the GDI heap.
+</span></i></p>
+<p><i><span style="color: black">Jargon</span></i> </p>
+<p><strong><i><span style="color: black">GDI Heap:</span></i></strong><i><span style="color: black"><br>
+Area of system memory used to store infomation about the graphical interface of 
+windows. </span></i></p>
+<p><strong><i><span style="color: black">Logical font:</span></i></strong><b><i><span style="color: black"><br>
+</span></i></b><i><span style="color: black">This a pointer to a physical font 
+file on disk.</span></i></p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

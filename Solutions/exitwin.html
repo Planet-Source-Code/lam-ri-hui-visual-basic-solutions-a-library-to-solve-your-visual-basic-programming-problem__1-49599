@@ -1,0 +1,44 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Exit Windows</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Exit Windows</font></u></b></p>
+<p class="MsoNormal"><em><span style="color: black">Use the function 
+ExitWindowsEx. This function has two parameters. The first is one or more flags 
+to instruct windows how to shutdown. These are listed below along with the 
+declarations. The second part of the function is reserved, and it set to zero. 
+It is important to unload your application to help the system to shut down 
+smoothly. The declarations for this function are below.</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Const EWX_LOGOFF = 0&nbsp;<br>
+Public Const EWX_SHUTDOWN = 1&nbsp;<br>
+Public Const EWX_REBOOT = 2&nbsp;<br>
+Public Const EWX_FORCE = 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function ExitWindowsEx Lib &quot;user32&quot; Alias _<br>
+&quot;ExitWindowsEx&quot; (ByVal uFlags As Long, ByVal dwReserved _<br>
+As Long) As Long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><em><span style="color: black">If you wanted to forcefully reboot the 
+computer use the following code:</span></em> </p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">t&amp; = 
+ExitWindowsEx(EWX_FORCE OR EWX_REBOOT, 0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

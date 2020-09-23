@@ -1,0 +1,45 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Unload All Forms</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Unload All Forms</font></u></b></p>
+<p><i><span style="color: black">How do you close your Visual Basic program?&nbsp; Do 
+you use the End method?&nbsp; In this tip I will explain why using the End method is 
+not the best way to close your program.&nbsp; It is an undocumented fact that using 
+the End method does not completely remove all forms from memory.&nbsp; This means 
+that your program does not give up all resources to other processes when it is 
+closed using the end method.&nbsp; The only way to completely shut down the program 
+is to unload each of the forms using the Unload method. &nbsp; Here is some code that 
+loops through all loaded forms and unloads them one by one. &nbsp; As soon as no 
+forms are loaded, your program has been closed.</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Sub UnloadAllForms()<br>
+Dim Form As Form<br>
+&nbsp;&nbsp; For Each Form In Forms<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unload Form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set Form = Nothing<br>
+&nbsp;&nbsp; Next Form<br>
+End Sub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><i><span style="color: black">It is best to call this procedure from the 
+unload event of your main form.</span></i></p>
+<p class="MsoNormal">&nbsp;</p>
+<p>&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

@@ -1,0 +1,68 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Set the Dropdown Height of a Combo Box</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to Set the Dropdown Height of a Combo 
+Box</font></b></u></p>
+<p><i><span style="color: black">This sub uses the MoveWindow API to set the 
+height of the dropdown area of a combo box. Use this sub what you like: it does 
+not have to be in the combo's dropdown event.</span></i> </p>
+<p><i><span style="color: black">To use this tip, call the SetComboHeight 
+procuedure with the name of the combo box you wish to edit, and the size in 
+pixels that the dropdown area should be set to.&nbsp; For Example:</span></i> </p>
+<p><i><span style="color: black">Call SetComboHeight(Combo1, 1450)</span></i>
+</p>
+<p><i><span style="color: black">Declarations</span></i> </p>
+<p><i><span style="color: black">Paste this into the declarations section of a 
+module: </span></i></p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Declare Function MoveWindow Lib &quot;user32&quot; _<br>
+(ByVal hwnd As Long, ByVal x As Long, ByVal y As _<br>
+Long, ByVal nWidth As Long, ByVal nHeight As Long, _<br>
+ByVal bRepaint As Long) As Long</span> </p>
+<p><i><span style="color: black">Procedure</span></i> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Sub SetComboHeight(oComboBox As ComboBox, _<br>
+lNewHeight As Long)<br>
+<br>
+Dim oldscalemode As Integer<br>
+<br>
+' This procedure does not work with frames: you <br>
+' cannot set the ScaleMode to vbPixels, because <br>
+' the frame does not have a ScaleMode Property. <br>
+' To get round this, you could set the parent control<br>
+' to be the form while you run this procedure.<br>
+<br>
+If TypeOf oComboBox.Parent Is Frame Then Exit Sub<br>
+<br>
+' Change the ScaleMode on the parent to Pixels.<br>
+oldscalemode = oComboBox.Parent.ScaleMode<br>
+oComboBox.Parent.ScaleMode = vbPixels<br>
+<br>
+' Resize the combo box window.<br>
+MoveWindow oComboBox.hwnd, oComboBox.Left, _<br>
+oComboBox.Top, oComboBox.Width, lNewHeight, 1<br>
+<br>
+' Replace the old ScaleMode<br>
+oComboBox.Parent.ScaleMode = oldscalemode<br>
+End Sub</span> </p>
+<p class="MsoNormal">&nbsp;</p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

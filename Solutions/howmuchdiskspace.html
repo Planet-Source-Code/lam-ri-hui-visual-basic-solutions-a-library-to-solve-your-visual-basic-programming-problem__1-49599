@@ -1,0 +1,47 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Find Out How Much Disk Space Is Occupied</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><b><font size="5">How to Find Out How Much Disk Space Is 
+Occupied</font></b></u></p>
+<p class="MsoNormal"><em><span style="color: black">Use the function 
+GetDiskFreeSpace. The declaration for this API function is:</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Declare Function GetDiskFreeSpace Lib &quot;kernel32&quot; Alias _<br>
+&quot;GetDiskFreeSpaceA&quot; (ByVal lpRootPathName As String, _<br>
+lpSectorsPerCluster As Long, lpBytesPerSector As Long, _<br>
+lpNumberOfFreeClusters As Long, lpTotalNumberOfClusters _<br>
+As Long) As Long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><em><span style="color: black">Here is an example of how to find out how much 
+free space a drive has:</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Dim 
+SectorsPerCluster&amp;<br>
+Dim BytesPerSector&amp;<br>
+Dim NumberOfFreeClusters&amp;<br>
+Dim TotalNumberOfClusters&amp;<br>
+Dim FreeBytes&amp;<br>
+dummy&amp; = GetDiskFreeSpace(&quot;c:\&quot;, SectorsPerCluster, _<br>
+BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters)<br>
+FreeBytes = NumberOfFreeClusters * SectorsPerCluster * _<br>
+BytesPerSector&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p class="MsoNormal"><em><span style="color: black">The Long FreeBytes contains 
+the number of free bytes on the drive.</span></em></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

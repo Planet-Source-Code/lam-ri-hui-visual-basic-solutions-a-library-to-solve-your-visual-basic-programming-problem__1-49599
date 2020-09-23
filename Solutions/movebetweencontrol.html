@@ -1,0 +1,50 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Move Between Controls With the Enter Key</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><u><font size="5"><b>H</b></font></u><b><u><font size="5">ow 
+to Move Between Controls With the Enter Key</font></u></b></p>
+<p class="MsoNormal"><em><span style="color:black">If you want to have the focus 
+move between the controls on a form when the enter key is pressed, you can with 
+the SendKeys function.&nbsp; The basis of the tip is to detect when the Enter key is 
+pressed, and then Send the Tab key to the program.</span></em> </p>
+<p><em><span style="color:black">You can detect when the user presses enter from 
+the KeyPress event procedure by checking to see if the KeyAscii parameter is the 
+character code 13. Then you can move the focus to the next control in the 
+TabIndex order with the code:</span></em> </p>
+<p><i><span style="color:black">SendKeys &quot;{tab}&quot; </span></i></p>
+<p><em><span style="color:black">You can move the focus to the previous control 
+with the code:</span></em> </p>
+<p><i><span style="color:black">SendKeys &quot;+{tab}&quot; </span></i></p>
+<p><em><span style="color:black">This technique works with most kinds of 
+controls. However, it does not work with command button controls, because 
+command buttons do not receive the KeyPress event when you press enter.</span></em>
+</p>
+<p><strong><i><span style="color:black">Code</span></i></strong> </p>
+<p class="MsoNormal">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+color:black">Sub Text1_KeyPress (KeyAscii As Integer)<br>
+If KeyAscii = 13 Then<br>
+&nbsp;&nbsp;&nbsp; SendKeys &quot;{tab}&quot;<br>
+&nbsp;&nbsp;&nbsp; KeyAscii = 0<br>
+End If<br>
+End Sub</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

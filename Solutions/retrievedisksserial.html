@@ -1,0 +1,61 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Retrieve a Disk</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p align="center"><b><u><font size="5">How to Retrieve a Disk's Serial Number</font></u></b></p>
+<p class="MsoNormal"><em><span style="color: black">Whenever a disk is 
+formatted, the operating system writes a serial number onto it. &nbsp;This number is 
+not guaranteed to be unique, but as it is a 32 bit integer it is unlikely to 
+find a duplicate!&nbsp; The number is often used as part of a copy protection 
+system.&nbsp; This tip shows you how to retrieve the number.</span></em> </p>
+<p><strong><i><span style="color: black">Declarations</span></i></strong> </p>
+<p><em><span style="color: black">Copy this code into the declarations section 
+of the project.</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Private Declare Function GetVolumeInformation Lib _<br>
+&quot;kernel32.dll&quot; Alias &quot;GetVolumeInformationA&quot; (ByVal _<br>
+lpRootPathName As String, ByVal lpVolumeNameBuffer As _<br>
+String, ByVal nVolumeNameSize As Integer, _<br>
+lpVolumeSerialNumber As Long, lpMaximumComponentLength _<br>
+As Long, lpFileSystemFlags As Long, ByVal _<br>
+lpFileSystemNameBuffer As String, ByVal _<br>
+nFileSystemNameSize As Long) As Long</span> </p>
+<p><strong><i><span style="color: black">Code</span></i></strong> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Function GetSerialNumber(strDrive As String) As Long<br>
+&nbsp;&nbsp;&nbsp; Dim SerialNum As Long<br>
+&nbsp;&nbsp;&nbsp; Dim Res As Long<br>
+&nbsp;&nbsp;&nbsp; Dim Temp1 As String<br>
+&nbsp;&nbsp;&nbsp; Dim Temp2 As String<br>
+&nbsp;&nbsp;&nbsp; Temp1 = String$(255, Chr$(0))<br>
+&nbsp;&nbsp;&nbsp; Temp2 = String$(255, Chr$(0))<br>
+&nbsp;&nbsp;&nbsp; Res = GetVolumeInformation(strDrive, Temp1, _<br>
+&nbsp;&nbsp;&nbsp; Len(Temp1), SerialNum, 0, 0, Temp2, Len(Temp2))<br>
+&nbsp;&nbsp;&nbsp; GetSerialNumber = SerialNum<br>
+End Function</span> </p>
+<p><strong><i><span style="color: black">Use</span></i></strong> </p>
+<p><em><span style="color: black">An example of using the above function:</span></em>
+</p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Call 
+MsgBox GetSerialNumber(&quot;C:\&quot;) </span></p>
+<p class="MsoNormal"><em><span style="color: black">This will bring up a message 
+box with the serial number of the C drive.</span></em></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

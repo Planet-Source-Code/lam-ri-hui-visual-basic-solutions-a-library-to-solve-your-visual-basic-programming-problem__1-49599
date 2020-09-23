@@ -1,0 +1,84 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Show the Properties Dialog Box</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p class="MsoNormal" align="center"><b><u><font size="5">How to Show the 
+Properties Dialog Box</font></u></b></p>
+<p class="MsoNormal"><em><span style="color: black">This tip demonstrates how to 
+use the Win32 API to bring up the explorer properties dialog box for a specified 
+file.&nbsp; This API function has the same effect as right clicking on a file in 
+Windows 95 and selecting properties.&nbsp; The dialog box that is opened is shown 
+below.</span></em> </p>
+<p><strong><i><span style="color: black">Declarations</span></i></strong> </p>
+<p><em><span style="color: black">This following code must be placed in the 
+projects declarations section.</span></em> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">Type 
+SHELLEXECUTEINFO<br>
+&nbsp;&nbsp;&nbsp; cbSize As Long<br>
+&nbsp;&nbsp;&nbsp; fMask As Long<br>
+&nbsp;&nbsp;&nbsp; hwnd As Long<br>
+&nbsp;&nbsp;&nbsp; lpVerb As String<br>
+&nbsp;&nbsp;&nbsp; lpFile As String<br>
+&nbsp;&nbsp;&nbsp; lpParameters As String<br>
+&nbsp;&nbsp;&nbsp; lpDirectory As String<br>
+&nbsp;&nbsp;&nbsp; nShow As Long<br>
+&nbsp;&nbsp;&nbsp; hInstApp As Long<br>
+&nbsp;&nbsp;&nbsp; lpIDList As Long<br>
+&nbsp;&nbsp;&nbsp; lpClass As String<br>
+&nbsp;&nbsp;&nbsp; hkeyClass As Long<br>
+&nbsp;&nbsp;&nbsp; dwHotKey As Long<br>
+&nbsp;&nbsp;&nbsp; hIcon As Long<br>
+&nbsp;&nbsp;&nbsp; hProcess As Long<br>
+End Type<br>
+<br>
+Public Const SEE_MASK_INVOKEIDLIST = &amp;HC<br>
+Public Const SEE_MASK_NOCLOSEPROCESS = &amp;H40<br>
+Public Const SEE_MASK_FLAG_NO_UI = &amp;H400<br>
+<br>
+Declare Function ShellExecuteEX Lib &quot;shell32.dll&quot; Alias _<br>
+&quot;ShellExecuteEx&quot; (SEI As SHELLEXECUTEINFO) As Long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><strong><i><span style="color: black">Code</span></i></strong> </p>
+<p><span style="font-size: 10.0pt; font-family: Courier New; color: black">
+Public Sub ShowProps(FileName As String, OwnerhWnd As Long)<br>
+&nbsp;&nbsp;&nbsp; Dim SEI As SHELLEXECUTEINFO<br>
+&nbsp;&nbsp;&nbsp; Dim r As Long<br>
+&nbsp;&nbsp;&nbsp; With SEI<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .cbSize = Len(SEI)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .fMask = SEE_MASK_NOCLOSEPROCESS Or _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SEE_MASK_INVOKEIDLIST Or SEE_MASK_FLAG_NO_UI<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .hwnd = OwnerhWnd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .lpVerb = &quot;properties&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .lpFile = FileName<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .lpParameters = vbNullChar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .lpDirectory = vbNullChar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .nShow = 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .hInstApp = 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .lpIDList = 0<br>
+&nbsp;&nbsp;&nbsp; End With<br>
+&nbsp;&nbsp;&nbsp; r = ShellExecuteEX(SEI)&nbsp;<br>
+End Sub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><strong><i><span style="color: black">Use</span></i></strong> </p>
+<p><em><span style="color: black">To show the properties dialog box of 
+&quot;c:\autoexec.bat&quot;, use the following code:</span></em> </p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Call 
+ShowProps(&quot;c:\autoexec.bat&quot;, Me.hwnd)</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

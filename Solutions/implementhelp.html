@@ -1,0 +1,96 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to implement &quot;What's This&quot; Help</title>
+<style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p class="MsoNormal" align="center"><b><u><span style="font-family: Arial">
+<font size="5">How to implement &quot;What's this?&quot; Help</font></span><font size="5" face="Arial">
+</font></u></b></p>
+<p><i><span style="color: black">Under Windows 95 and Windows NT 3.51, it is 
+possible to right-click on items and get the &quot;What's This?&quot; window to appear. To 
+set this up in Visual Basic, you need to use a pop-up menu. </span></i></p>
+<p><i><span style="color: black">Example</span></i> </p>
+<ol start="1" type="1" style="margin-bottom: 0in">
+  <li class="MsoNormal">Start Visual Basic 4.0 or, if it is already running, 
+  click New Project on the File menu. </li>
+  <li class="MsoNormal">Set the WhatsThisHelp and WhatsThisButton properties for 
+  Form1 to TRUE. </li>
+  <li class="MsoNormal">Add the following code to reference the Hotspot Editor 
+  help file to the Form_Load procedure:<span style="font-size: 10.0pt; font-family: Courier New; color: black">Private 
+  Sub Form_Load()<br>
+  ' This should point to the hc directory&nbsp;<br>
+  'under the VB4 directory&nbsp;<br>
+  App.HelpFile = &quot;c:\vb\hc\shed.hlp&quot;<br>
+  End Sub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+  <li class="MsoNormal">Add two menu items to Form1 using the following as a 
+  guide:</li>
+</ol>
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">Menu Property Value</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">----------------------------------------------------</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">WhatsThis Caption WhatsThis</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">WhatsThis Name mnuWhatsThis</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">WhatsThis Visible False</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">&nbsp;</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">&nbsp;</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">What's This? Caption What's This?</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .25in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt">What's This? Name mnuWhatsThisHelp</pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<!--mstheme--></font><pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 10.0pt; font-family: Courier New; margin-left: .5in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt"> </pre><!--mstheme--><font face="arial, Arial, Helvetica">
+<ol start="5" type="1" style="margin-bottom: 0in">
+  <li class="MsoNormal">Indent &quot;What's This?&quot; to make it a sub-menu of WhatsThis 
+  by pressing the right-arrow button on the Menu Editor. </li>
+  <li class="MsoNormal">Add the following code to the General Declarations 
+  section of Form1:<span style="font-size: 10.0pt; font-family: Courier New; color: black"> 
+  Public ThisControl as control </span></li>
+  <li class="MsoNormal">Add the following code to the mnuWhatsThisHelp_Click 
+  procedure:<span style="font-size: 10.0pt; font-family: Courier New; color: black"> 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Private Sub mnuWhatsThisHelp_Click()<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ThisControl.ShowWhatsThis<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End Sub<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+  <li class="MsoNormal">Add a Command Button control to the form and set the 
+  following Properties:<span style="font-size: 10.0pt; font-family: Courier New; color: black">WhatsThisHelpID 
+  = 1<br>
+  HelpContextID = 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+  <li class="MsoNormal">Add following code to the Command1_MouseUp event:<span style="font-size: 10.0pt; font-family: Courier New; color: black">Private 
+  Sub Command1_MouseUp(Button As Integer, Shift As Integer, _<br>
+  X As Single, Y As Single)<br>
+  If Button = vbRightButton Then<br>
+  &nbsp;&nbsp;&nbsp; Set ThisControl = Command1<br>
+  &nbsp;&nbsp;&nbsp; PopupMenu mnuWhatsThis&nbsp;<br>
+  End If&nbsp;<br>
+  Set ThisControl = Nothing&nbsp;<br>
+  End Sub&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+  <li class="MsoNormal">Run the application. Right-click on the Command button 
+  and then left-<span style="font-size: 10.0pt; font-family: Courier New; color: black">Click 
+  on the &quot;What's This?&quot; popup to bring up&nbsp;<br>
+  the Help file.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+</ol>
+<p class="MsoNormal"><i><span style="color: black">Source: Microsoft Knowledge 
+Base</span></i></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>

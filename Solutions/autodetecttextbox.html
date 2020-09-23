@@ -1,0 +1,66 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>How to Auto-detect Empty Textboxes For User Input Before Update Record In 
+Database</title>
+<meta name="Microsoft Theme" content="studio 011, default">
+<meta name="Microsoft Border" content="b, default">
+</head>
+
+<body background="../_themes/studio/stubkgnd.gif" bgcolor="#FFFFFF" text="#000000" link="#330099" vlink="#CCCC33" alink="#993333"><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top"><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p class="MsoNormal" align="center"><u><font size="5">How to </font>
+<font size="5" face="Arial">Auto-detect Empty Textboxes For User Input Before 
+Update Record In Database</font></u></p>
+<p class="MsoNormal"><em><span style="color: black">Description: We want the 
+users to notice there is something missing in textboxes before changing forms or 
+updating records, the following code in the update-command button serves the 
+checking:</span></em> </p>
+<p><em><span style="color: black">Code: </span></em></p>
+<p class="MsoNormal">
+<span style="font-size: 10.0pt; font-family: Courier New; color: black">Option 
+Explicit <br>
+' <br>
+Private Sub cmdUpdate_Click() <br>
+Dim ctr As Control <br>
+' <br>
+'==================================== <br>
+' CHECKING EMPTY TEXTBOX SUBROUTINE <br>
+'==================================== <br>
+' <br>
+'looping through the entire control collection <br>
+'in current form. &quot;Controls&quot; is a Collection <br>
+'of all controls on form <br>
+For Each ctr In Me.Controls <br>
+'use &quot;TypeOf&quot; function to identify TextBoxes <br>
+If TypeOf ctr Is TextBox Then <br>
+'check if the TextBox control has no Text <br>
+If ctr.Text = vbNullString Then<br>
+MsgBox &quot;TextBox information missing&quot; <br>
+ctr.SetFocus <br>
+'Setfocus back to TextBox <br>
+Exit Sub <br>
+'This is to get out <br>
+End If <br>
+End If <br>
+Next ctr <br>
+' <br>
+'==================================== <br>
+'Here you need to enter what you should do <br>
+'for thus buttons (e.g., Update, Exit, New form etc.) <br>
+'in case all TextBoxes have text. <br>
+'==================================== <br>
+' End Sub</span></p>
+
+<!--mstheme--></font><!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td><!--mstheme--><font face="arial, Arial, Helvetica">
+
+<p>&nbsp;</p>
+<p><a href="../Main.html">Main</a></p>
+
+<!--mstheme--></font></td></tr><!--msnavigation--></table></body>
+
+</html>
